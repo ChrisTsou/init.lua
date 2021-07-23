@@ -47,6 +47,11 @@ require('packer').startup(function(use)
     }
     use 'xiyaowong/nvim-cursorword'                       -- highlight word under cursor
     use 'ray-x/lsp_signature.nvim'                        -- show function signature on type
+    use {
+        'akinsho/nvim-bufferline.lua',                    -- tabs
+        requires = 'kyazdani42/nvim-web-devicons'
+        }
+
 
 end)
 -- Neovim options --
@@ -351,6 +356,12 @@ vim.o.swapfile = false
     require "surround".setup {
         prefix = 'S'
     }
+
+    -- bufferline --
+    require("bufferline").setup({
+        separator_style = 'padded_slant',
+        diagnostics = 'nvim_lsp',
+    })
 
 -- AutoCommands --
     -- ultisnips --
