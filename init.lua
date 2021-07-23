@@ -1,9 +1,8 @@
-    -- add treesitter statusline to see current node --
-
 -- on new language, configure:
 -- lsp
 -- formatter
 -- linter
+
 --package manager --
 require('packer').startup(function(use)
     use 'wbthomason/packer.nvim'                          -- packer itself
@@ -16,7 +15,7 @@ require('packer').startup(function(use)
     use 'honza/vim-snippets'
     use 'windwp/nvim-autopairs'                           -- autopair paren
     use 'phaazon/hop.nvim'                                -- hop (easymotion)
-    use 'qpkorr/vim-bufkill'                            -- delete buffer without closing windows
+    use 'qpkorr/vim-bufkill'                              -- delete buffer without closing windows
     use {                                                 -- fuzzy find anything
         'nvim-telescope/telescope.nvim',
         requires = {
@@ -28,7 +27,6 @@ require('packer').startup(function(use)
     use 'blackCauldron7/surround.nvim'                    -- Sandwich things
     use 'mfussenegger/nvim-lint'                          -- linter integration
     use 'b3nj5m1n/kommentary'                             -- commenting
-
     -- treesitter --
     use {
         'nvim-treesitter/nvim-treesitter',
@@ -145,7 +143,7 @@ vim.o.swapfile = false
          }
     end
 
-    local prettier_eslint = function () -- slow
+    local prettier_eslint = function () -- slow, not used
         return {
             exe = 'prettier-eslint',
             args = {
@@ -217,7 +215,7 @@ vim.o.swapfile = false
     -- colorscheme --
     vim.cmd('syntax on')
     vim.cmd(':colorscheme nvcode')
-    vim.cmd(':hi Normal guibg=NONE ctermbg=NONE')
+    vim.cmd(':hi Normal guibg=NONE ctermbg=NONE') -- darker background
     vim.cmd(':hi LineNr guibg=NONE ctermbg=NONE')
 
     -- lualine --
@@ -306,7 +304,6 @@ vim.o.swapfile = false
 
     -- hop --
     require('hop').setup({ keys = 'cieansthbyouvwdlgxjkpfmr'})
-
 
     -- which-key --
     require("which-key").setup({

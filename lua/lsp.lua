@@ -1,4 +1,4 @@
--- enable snippet Support --
+-- enable snippet Support (dont forget to add it to server below) --
 local capabilities = vim.lsp.protocol.make_client_capabilities()
 capabilities.textDocument.completion.completionItem.snippetSupport = true
 capabilities.textDocument.completion.completionItem.resolveSupport = {
@@ -54,5 +54,3 @@ require('lspconfig').sumneko_lua.setup({
         }
     }
 })
-
--- ADD SERVER TO SNIPPETS(TOP), LEAVE THIS AT EOF --
