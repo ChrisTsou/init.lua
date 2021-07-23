@@ -50,14 +50,19 @@ require('packer').startup(function(use)
     use {
         'akinsho/nvim-bufferline.lua',                    -- tabs
         requires = 'kyazdani42/nvim-web-devicons'
-        }
+    }
+    use 'mhinz/vim-startify'                              -- start screen
+    use {
+        'kyazdani42/nvim-tree.lua',                       -- file tree
+        requires = 'kyazdani42/nvim-web-devicons'
+    }
 
 
 end)
 -- Neovim options --
 vim.o.termguicolors = true                                -- Opaque Background
 vim.o.mouse = 'a'                                         -- enable mouse scrolling
-vim.o.clipboard = vim.o.clipboard .. 'unnamedplus'        -- use system clipboard by default
+--vim.o.clipboard = vim.o.clipboard .. 'unnamedplus'      -- use system clipboard by default (slow startup)
 vim.o.tabstop = 4                                         -- tab width
 vim.o.softtabstop = 4
 vim.o.shiftwidth = 4
@@ -89,7 +94,7 @@ vim.o.history = 1000                                      -- history limit
 vim.opt.backspace = {'indent', 'eol' , 'start'}           -- sensible backspacing
 vim.o.undofile = true                                     -- enable persistent undo
 vim.o.undodir= '/tmp'                                     -- undo temp file directory
---vim.o.foldmethod = 'syntax'                               -- fold according to syntax highlight
+--vim.o.foldmethod = 'syntax'                             -- fold according to syntax highlight
 vim.o.foldmethod = 'expr'
 vim.o.foldexpr = 'nvim_treesitter#foldexpr()'
 vim.o.foldlevel = 99                                      -- open all folds by default
@@ -134,6 +139,59 @@ vim.o.swapfile = false
     vim.g.UltiSnipsExpandTrigger = "<F12>"
     vim.g.UltiSnipsJumpForwardTrigger = "<F12>"
     vim.g.UltiSnipsJumpBackwardTrigger = "<F12>"
+
+    -- startify --
+    vim.g.startify_padding_left = 10
+    vim.g.startify_session_persistence = 1
+    vim.g.startify_enable_special = 0
+    vim.g.startify_change_to_vcs_root = 1
+    vim.g.startify_lists = {
+        { type = 'dir'},
+        { type = 'files'},
+        { type = 'bookmarks'},
+        { type = 'commands'},
+    }
+    vim.g.startify_bookmarks = {
+        { v = '~/.config/nvim/init.lua'},
+        { term = '/mnt/c/Users/chris/AppData/Local/Packages/Microsoft.WindowsTerminal_8wekyb3d8bbwe/LocalState/settings.json'},
+        { al = '~/.zsh_aliases'}
+    }
+    vim.g.startify_commands = {
+        { ch = {'Health Check', ':checkhealth'}},
+        { ps = {'Plugin Sync',':PackerSync'}},
+        { h = {'Help', ':Telescope help_tags'}},
+    }
+    vim.g.startify_custom_header = {
+        '',
+        '                                                    ▟▙            ',
+        '                                                    ▝▘            ',
+        '            ██▃▅▇█▆▖  ▗▟████▙▖   ▄████▄   ██▄  ▄██  ██  ▗▟█▆▄▄▆█▙▖',
+        '            ██▛▔ ▝██  ██▄▄▄▄██  ██▛▔▔▜██  ▝██  ██▘  ██  ██▛▜██▛▜██',
+        '            ██    ██  ██▀▀▀▀▀▘  ██▖  ▗██   ▜█▙▟█▛   ██  ██  ██  ██',
+        '            ██    ██  ▜█▙▄▄▄▟▊  ▀██▙▟██▀   ▝████▘   ██  ██  ██  ██',
+        '            ▀▀    ▀▀   ▝▀▀▀▀▀     ▀▀▀▀       ▀▀     ▀▀  ▀▀  ▀▀  ▀▀',
+        '',
+        '',
+        '',
+    }
+
+    -- nvim-tree --
+    vim.g.nvim_tree_auto_open = 1
+    vim.g.nvim_tree_auto_close = 1
+    vim.g.nvim_tree_auto_ignore_ft = { 'startify' }
+    vim.g.nvim_tree_lsp_diagnostics = 1
+    vim.g.nvim_tree_git_hl = 0       -- disable git integration, too slow
+    vim.g.nvim_tree_show_icons = {   -- same for icons
+        git = 0,
+        folders = 1,
+        files = 1,
+    }
+    local tree_cb = require('nvim-tree.config').nvim_tree_callback
+    vim.g.nvim_tree_bindings = {
+      { key = "<Tab>", mode = 'n' , cb = ':NvimTreeToggle<CR>'},
+      { key = "n", mode = 'n' , cb = tree_cb('cd')},
+      { key = "h", mode = 'n' , cb = tree_cb('parent_node')},
+    }
 
 -- Plugin Configuration --
     -- lsp module load --
@@ -274,9 +332,10 @@ vim.o.swapfile = false
         defaults = {
             file_sorter = require('telescope.sorters').get_fzy_sorter,
             generic_sorter = require('telescope.sorters').get_fzy_sorter,
-            sorting_strategy = 'descending',
+            sorting_strategy = 'ascending',
             layout_strategy = 'flex',
             layout_config = {
+                prompt_position = 'top',
                 vertical = {
                     mirror = true
                 }
@@ -359,11 +418,22 @@ vim.o.swapfile = false
 
     -- bufferline --
     require("bufferline").setup({
-        separator_style = 'padded_slant',
-        diagnostics = 'nvim_lsp',
+        options = {
+            separator_style = 'slant',
+            diagnostics = 'nvim_lsp',
+            offsets = {{ filetype = "NvimTree", text = "File Explorer", text_align = "left" }},
+        },
+        highlights = {
+        }
     })
 
 -- AutoCommands --
+    -- Nvim-tree --
+    --vim.cmd([[autocmd UIEnter * NvimTreeOpen ]])
+
+    -- startify --
+    vim.cmd([[autocmd BufDelete * if empty(filter(tabpagebuflist(), '!buflisted(v:val)')) | Startify | endif]])
+
     -- ultisnips --
     vim.cmd('autocmd FileType javascriptreact UltiSnipsAddFiletypes javascript')
 
@@ -487,8 +557,11 @@ vim.o.swapfile = false
     map('i', '<C-v>', 'compe#close()', {silent = true, expr = true})
 
     -- neoscroll --
-    map('', '<C-t>', [[<Cmd>lua require('neoscroll').scroll(vim.wo.scroll, true, 250)<CR>]], {noremap = true,})
-    map('', '<C-s>', [[<Cmd>lua require('neoscroll').scroll(-vim.wo.scroll, true, 250)<CR>]], {noremap = true,})
+    map('', '<C-t>', [[<Cmd>lua require('neoscroll').scroll(vim.wo.scroll, true, 250)<CR>]], {noremap = true})
+    map('', '<C-s>', [[<Cmd>lua require('neoscroll').scroll(-vim.wo.scroll, true, 250)<CR>]], {noremap = true})
+
+    -- Nvim-tree --
+    map('n', '<Tab>', ':NvimTreeToggle<CR>', { noremap = true, silent = true })
 
     wk.register({
         ['<leader>'] = {
