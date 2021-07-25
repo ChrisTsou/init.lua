@@ -2,6 +2,7 @@
 -- lsp
 -- formatter
 -- linter
+-- treesitter TSInstall
 
 --package manager --
 require('packer').startup(function(use)
@@ -11,7 +12,7 @@ require('packer').startup(function(use)
     use 'neovim/nvim-lspconfig'                           -- lsp config
     use 'hrsh7th/nvim-compe'                              -- autocompletion
     use 'mhartington/formatter.nvim'                      -- formatter
-    use 'SirVer/ultisnips'
+    --use ''                                -- snippets
     use 'honza/vim-snippets'
     use 'windwp/nvim-autopairs'                           -- autopair paren
     use 'phaazon/hop.nvim'                                -- hop (easymotion)
@@ -27,11 +28,13 @@ require('packer').startup(function(use)
     use 'blackCauldron7/surround.nvim'                    -- Sandwich things
     use 'mfussenegger/nvim-lint'                          -- linter integration
     use 'b3nj5m1n/kommentary'                             -- commenting
+
     -- treesitter --
     use {
         'nvim-treesitter/nvim-treesitter',
         run = ':TSUpdate'
     }
+    use 'windwp/nvim-ts-autotag'
 
     -- appearance --
     use 'christianchiarulli/nvcode-color-schemes.vim'
@@ -56,6 +59,7 @@ require('packer').startup(function(use)
         'kyazdani42/nvim-tree.lua',                       -- file tree
         requires = 'kyazdani42/nvim-web-devicons'
     }
+    use "lukas-reineke/indent-blankline.nvim"             -- indent lines
 
 
 end)
@@ -102,7 +106,8 @@ vim.o.inccommand = 'nosplit'                              -- visual feedback whi
 vim.o.showtabline = 2                                     -- always show tabline
 vim.o.grepprg = 'rg --vimgrep'                            -- use rg as default grepper
 vim.o.scrolloff = 5                                       -- for context when scrolling (neoscroll needs this)
-vim.o.updatetime = 10                                      -- time to trigger things like nvim-cursorword
+vim.o.hidden = true                                       -- switch buffer without saving
+vim.o.updatetime = 1000                                   -- time to trigger things like nvim-cursorword
 
 -- performance tweaks
 vim.o.cursorline = false
@@ -134,11 +139,10 @@ vim.o.swapfile = false
     -- which-key --
     vim.g.timeoutlen = 500
 
-    -- ultisnips --
-    vim.g.python3_host_prog = '/usr/sbin/python3'
-    vim.g.UltiSnipsExpandTrigger = "<F12>"
-    vim.g.UltiSnipsJumpForwardTrigger = "<F12>"
-    vim.g.UltiSnipsJumpBackwardTrigger = "<F12>"
+    -- indent-blankline --
+    vim.g.indent_blankline_use_treesitter = true
+    vim.g.indent_blankline_char_list = {'│', '|', '┆', '┊'}
+    vim.g.indent_blankline_filetype_exclude = {'startify', 'help'}
 
     -- startify --
     vim.g.startify_padding_left = 10
@@ -206,7 +210,7 @@ vim.o.swapfile = false
          }
     end
 
-    local prettier_eslint = function () -- slow, not used
+    --[[ local prettier_eslint = function () -- slow, not used
         return {
             exe = 'prettier-eslint',
             args = {
@@ -217,7 +221,7 @@ vim.o.swapfile = false
             },
             stdin = true
         }
-    end
+    end ]]
 
     require('formatter').setup({
         logging = false,
@@ -256,8 +260,7 @@ vim.o.swapfile = false
         typescriptreact = {'eslint'},
         --lua = {'luacheck'},
     }
-
-    vim.cmd([[au InsertLeave,TextChanged,BufEnter,BufWritePost * lua require('lint').try_lint()]])
+    vim.cmd([[au InsertLeave,TextChanged,BufEnter,BufWritePost * silent! lua require('lint').try_lint()]])
 
     -- devicons --
     require'nvim-web-devicons'.setup {
@@ -318,11 +321,11 @@ vim.o.swapfile = false
         source = {
             path = true;
             --buffer = true;
-            calc = true;
             nvim_lsp = true;
             nvim_lua = true;
-            ultisnips = true;
             treesitter = true;
+            calc = true;
+            --snippets
         };
     }
 
@@ -342,8 +345,8 @@ vim.o.swapfile = false
             },
             mappings = {
                 i = {
-                    ['<C-p>'] = actions.move_selection_next,
-                    ['<C-n>'] = actions.move_selection_previous,
+                    ['<C-n>'] = actions.move_selection_next,
+                    ['<C-p>'] = actions.move_selection_previous,
                     ['<C-t>'] = actions.preview_scrolling_down,
                     ['<C-s>'] = actions.preview_scrolling_up,
                 },
@@ -399,17 +402,19 @@ vim.o.swapfile = false
             -- Using this option may slow down your editor, and you may see some duplicate highlights.
             -- Instead of true it can also be a list of languages
             additional_vim_regex_highlighting = false,
-      },
-      incremental_selection = {
-      enable = true,
-          keymaps = {
-            init_selection = "<leader>s",
-            node_incremental = "<C-h>",
-            scope_incremental = "<leader>s",
-            node_decremental = "<C-n>",
-          },
-      },
+        },
+        incremental_selection = {
+        enable = true,
+            keymaps = {
+              init_selection = "<leader>s",
+              node_incremental = "<C-h>",
+              scope_incremental = "<leader>s",
+              node_decremental = "<C-n>",
+            },
+        },
     })
+        -- treesiter plugins --
+        require('nvim-ts-autotag').setup()
 
     -- surround.nvim --
     require "surround".setup {
@@ -417,61 +422,103 @@ vim.o.swapfile = false
     }
 
     -- bufferline --
+    --offset highligh
+    vim.cmd(':highlight my_bufferline_offset guifg=#eeffff guibg=#263238')
+
     require("bufferline").setup({
         options = {
             separator_style = 'slant',
             diagnostics = 'nvim_lsp',
-            offsets = {{ filetype = "NvimTree", text = "File Explorer", text_align = "left" }},
+            offsets = {{
+                filetype = "NvimTree",
+                text = "File Explorer",
+                text_align = "left",
+                highlight = 'my_bufferline_offset'
+            }},
         },
         highlights = {
+            -- same as lualine material
+            separator_selected = {
+                guifg = '#263238',
+            },
+            separator_visible = {
+                guifg = '#263238',
+            },
+            separator = {
+                guifg = '#263238',
+            },
+            fill = {
+                guibg = '#263238',
+            }
         }
     })
 
 -- AutoCommands --
+    local function au(name, commands)
+      local cmds = {}
+
+      for _, cmd in ipairs(commands) do
+        table.insert(cmds, 'au ' .. cmd)
+      end
+
+      local cmd = table.concat({
+        'augroup dotfiles_',
+        name,
+        "\n",
+        "autocmd!\n",
+        table.concat(cmds, "\n"),
+        "\n",
+        'augroup END'
+      })
+
+      vim.cmd(cmd)
+    end
+
     -- Nvim-tree --
     --vim.cmd([[autocmd UIEnter * NvimTreeOpen ]])
 
     -- startify --
-    vim.cmd([[autocmd BufDelete * if empty(filter(tabpagebuflist(), '!buflisted(v:val)')) | Startify | endif]])
+    au('startify', {[[BufDelete * if empty(filter(tabpagebuflist(), '!buflisted(v:val)')) | Startify | endif]]})
 
-    -- ultisnips --
-    vim.cmd('autocmd FileType javascriptreact UltiSnipsAddFiletypes javascript')
+    au('essentials', {
+        [[BufEnter * set fo-=c fo-=r fo-=o]],  -- stop annoying auto commenting on new lines
+        [[FileType help wincmd L]],            -- open help in vertical split
+        [[BufWritePre * :%s/\s\+$//e]],        -- remove trailing whitespaces before saving
+    })
 
-  vim.cmd([[
-    au BufEnter * set fo-=c fo-=r fo-=o                     " stop annoying auto commenting on new lines
-    au FileType help wincmd L                               " open help in vertical split
-    au BufWritePre * :%s/\s\+$//e                           " remove trailing whitespaces before saving
-  ]])
+    -- enable spell only if file type is normal text
+    vim.cmd([[
+        let spellable = ['markdown', 'gitcommit', 'txt', 'text', 'liquid', 'rst']
+        augroup spellcheck
+            au BufEnter * if index(spellable, &ft) < 0 | set nospell | else | set spell | endif
+        augroup END
+    ]])
 
-  -- enable spell only if file type is normal text
-  vim.cmd([[
-    let spellable = ['markdown', 'gitcommit', 'txt', 'text', 'liquid', 'rst']
-    autocmd BufEnter * if index(spellable, &ft) < 0 | set nospell | else | set spell | endif
-  ]])
-
-  -- Return to last edit position when opening files
-  vim.cmd([[
-    autocmd BufReadPost * if line("'\"") > 0 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
-  ]])
+    -- Return to last edit position when opening files
+    au('last_edit', {[[
+        BufReadPost * if line("'\"") > 0 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
+    ]]})
 
     -- format on save (e.g: *.js between BufWritePost nad FormatWrite)
-        vim.api.nvim_exec([[
-        augroup FormatAutogroup
-          autocmd!
-          autocmd BufWritePost *.js,*.jsx,*.ts,*.tsx FormatWrite
-        augroup END
-        ]], true)
+    au('FormatAutogroup', {[[
+        BufWritePost *.js,*.jsx,*.ts,*.tsx FormatWrite
+    ]]})
 
-  -- WSL yank support
-  vim.g.wsl_clip_exe_location = '/mnt/c/Windows/System32/clip.exe'
-  vim.cmd([[
-    if executable(g:wsl_clip_exe_location)
-        augroup WSLYank
-            autocmd!
-            autocmd TextYankPost * if v:event.operator ==# 'y' | call system(g:wsl_clip_exe_location, @0) | endif
-        augroup END
-    endif
-  ]])
+    --lsp hover
+    au('lspHover', {[[
+        CursorHold * lua vim.lsp.buf.hover()
+    ]]})
+
+    -- WSL yank support
+    vim.g.wsl_clip_exe_location = '/mnt/c/Windows/System32/clip.exe'
+    vim.cmd([[
+      if executable(g:wsl_clip_exe_location)
+          augroup WSLYank
+              autocmd!
+              autocmd TextYankPost * if v:event.operator ==# 'y' | call system(g:wsl_clip_exe_location, @0) | endif
+          augroup END
+      endif
+    ]])
 
 -- Custom Functions --
     -- Utility functions for compe and luasnip
@@ -494,8 +541,8 @@ vim.o.swapfile = false
     _G.tab_complete = function()
       if vim.fn.pumvisible() == 1 then
         return t '<C-n>'
-      elseif vim.fn["UltiSnips#CanExpandSnippet"]() == 1 or vim.fn["UltiSnips#CanJumpForwards"]() == 1 then
-        return t '<C-R>=UltiSnips#ExpandSnippetOrJump()<CR>'
+      --elseif vim.fn["UltiSnips#CanJumpForwards"]() == 1 or vim.fn["UltiSnips#CanExpandSnippet"]() == 1 then
+      --  return t '<C-R>=UltiSnips#ExpandSnippetOrJump()<CR>'
       elseif check_back_space() then
         return t '<Tab>'
       else
@@ -506,8 +553,8 @@ vim.o.swapfile = false
     _G.s_tab_complete = function()
       if vim.fn.pumvisible() == 1 then
         return t '<C-p>'
-      elseif vim.fn["UltiSnips#CanJumpBackwards"]() == 1 then
-        return t '<C-R>=UltiSnips#JumpBackwards()<CR>'
+      --elseif vim.fn["UltiSnips#CanJumpBackwards"]() == 1 then
+      --  return t '<C-R>=UltiSnips#JumpBackwards()<CR>'
       else
         return t '<S-Tab>'
       end
@@ -533,6 +580,8 @@ vim.o.swapfile = false
     map('n', '<C-d>', ':bprevious<CR>', {silent = true})
     map('n', '<S-Enter>', 'O', {noremap = true}) --this also requires to configure terminal to send proper keycode
     map('n', '<Enter>', 'o', {noremap = true})
+    map('n', '<C-f>', '<C-]>', {noremap = true})
+    map('n', '<C-m>', '<C-o>', {noremap = true})
     -- pane switching --
     map('n', '<C-h>', '<C-w>h', {noremap = true})
     map('n', '<C-t>', '<C-w>j', {noremap = true})
@@ -563,13 +612,20 @@ vim.o.swapfile = false
     -- Nvim-tree --
     map('n', '<Tab>', ':NvimTreeToggle<CR>', { noremap = true, silent = true })
 
+    -- lsp --
+    map('n', 'K', '<Cmd>lua vim.lsp.buf.hover()<CR>', { noremap = true, silent = true })
+
+    -- for terminal copy --
+    map('n', 'Y', '', {noremap = true})
+    map('n', '<C-y>', '', {noremap = true})
+
     wk.register({
         ['<leader>'] = {
-            a = {':Telescope lsp_code_actions<CR>', 'code actions'},
+            a = {[[<Cmd>lua require('telescope.builtin').lsp_code_actions(require('telescope.themes').get_cursor({}))<CR>]], 'code actions'},
             w = {':w<CR>', 'write buffer'},
             h = {[[<Cmd>lua require('hop').hint_words()<CR>]], 'hop'},
             f = {':Format<CR>', 'format'},
-            i = {':luafile init.lua<CR>', 'source'},
+            rn = {'<cmd>lua vim.lsp.buf.rename()<CR>', 'lsp rename'},
         },
         ['<leader>l'] = {
             name = 'list',
@@ -614,7 +670,7 @@ vim.o.swapfile = false
 
     wk.register({
         ['<leader>'] = {
-            a = {[[<Cmd>lua require('telescope.builtin').lsp_range_code_actions()<CR>]], 'code actions'},
+            a = {[[<Cmd>lua require('telescope.builtin').lsp_range_code_actions(require('telescope.themes').get_cursor({}))<CR>]], 'code actions'},
             h = {[[<Cmd>lua require('hop').hint_words()<CR>]], 'hop'},
             gl = {[[<Cmd>lua require('hop').hint_lines()<CR>]], 'line'}
         }
