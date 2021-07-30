@@ -12,7 +12,7 @@ require('packer').startup(function(use)
     use 'neovim/nvim-lspconfig'                           -- lsp config
     use 'hrsh7th/nvim-compe'                              -- autocompletion
     use 'mhartington/formatter.nvim'                      -- formatter
-    --use ''                                -- snippets
+    use 'L3MON4D3/LuaSnip'                                -- snippets
     use 'honza/vim-snippets'
     use 'windwp/nvim-autopairs'                           -- autopair paren
     use 'phaazon/hop.nvim'                                -- hop (easymotion)
@@ -200,16 +200,9 @@ vim.o.swapfile = false
 -- Plugin Configuration --
     -- lsp module load --
     require('lsp')
+    require('snippets/*')
 
     -- formatter --
-    local prettier = function()
-         return {
-             exe = "prettier",
-             args = {"--stdin-filepath", vim.api.nvim_buf_get_name(0)},
-             stdin = true
-         }
-    end
-
     --[[ local prettier_eslint = function () -- slow, not used
         return {
             exe = 'prettier-eslint',
@@ -222,6 +215,15 @@ vim.o.swapfile = false
             stdin = true
         }
     end ]]
+
+    local prettier = function()
+         return {
+             exe = "prettier",
+             args = {"--stdin-filepath", vim.api.nvim_buf_get_name(0)},
+             stdin = true
+         }
+    end
+
 
     require('formatter').setup({
         logging = false,
@@ -246,6 +248,15 @@ vim.o.swapfile = false
             typescriptreact = {
                 prettier
             },
+            rust = {
+                function()
+                    return {
+                        exe = "rustfmt",
+                        args = {"--emit=stdout"},
+                        stdin = true
+                    }
+                end
+            },
         }
     })
 
@@ -260,7 +271,7 @@ vim.o.swapfile = false
         typescriptreact = {'eslint'},
         --lua = {'luacheck'},
     }
-    vim.cmd([[au InsertLeave,TextChanged,BufEnter,BufWritePost * silent! lua require('lint').try_lint()]])
+    vim.cmd([[au TextChanged,TextChangedI,BufEnter,BufWritePost * silent! lua require('lint').try_lint()]])
 
     -- devicons --
     require'nvim-web-devicons'.setup {
@@ -320,12 +331,13 @@ vim.o.swapfile = false
         };
         source = {
             path = true;
-            --buffer = true;
+            buffer = true;
+            tags = true;
+            calc = false;
             nvim_lsp = true;
             nvim_lua = true;
             treesitter = true;
-            calc = true;
-            --snippets
+            luasnip = true;
         };
     }
 
@@ -359,8 +371,6 @@ vim.o.swapfile = false
             }
         }
     }
-
-    require('telescope').load_extension('ultisnips')
 
     -- nvim-autopairs --
     require('nvim-autopairs').setup()
@@ -535,14 +545,10 @@ vim.o.swapfile = false
       end
     end
 
-    -- Use (s-)tab to:
-    --- move to prev/next item in completion menu
-    --- jump to prev/next snippet's placeholder
+    local luasnip = require('luasnip')
     _G.tab_complete = function()
-      if vim.fn.pumvisible() == 1 then
-        return t '<C-n>'
-      --elseif vim.fn["UltiSnips#CanJumpForwards"]() == 1 or vim.fn["UltiSnips#CanExpandSnippet"]() == 1 then
-      --  return t '<C-R>=UltiSnips#ExpandSnippetOrJump()<CR>'
+      if luasnip.expand_or_jumpable() then
+        return t '<Plug>luasnip-expand-or-jump'
       elseif check_back_space() then
         return t '<Tab>'
       else
@@ -550,7 +556,7 @@ vim.o.swapfile = false
       end
     end
 
-    _G.s_tab_complete = function()
+    --[[ _G.s_tab_complete = function()
       if vim.fn.pumvisible() == 1 then
         return t '<C-p>'
       --elseif vim.fn["UltiSnips#CanJumpBackwards"]() == 1 then
@@ -558,7 +564,7 @@ vim.o.swapfile = false
       else
         return t '<S-Tab>'
       end
-    end
+    end ]]
 
 -- Mappings --
     local wk = require("which-key")
@@ -596,9 +602,11 @@ vim.o.swapfile = false
 
     -- tab navigation --
     map('i', '<Tab>', 'v:lua.tab_complete()', { expr = true})
-    map('s', '<Tab>', 'v:lua.tab_complete()', { expr = true})
-    map('i', '<S-Tab>', 'v:lua.s_tab_complete()', { expr = true})
-    map('s', '<S-Tab>', 'v:lua.s_tab_complete()', { expr = true})
+    map('s', '<Tab>', [[<cmd>lua require('luasnip').jump(1)<Cr>]], { expr = true})
+    map('i', '<S-Tab>', [[<cmd>lua require'luasnip'.jump(-1)<Cr>]], { expr = true, silent = true})
+    map('s', '<S-Tab>', [[<cmd>lua require'luasnip'.jump(-1)<Cr>]], { expr = true, silent = true})
+    --map('i', '<S-Tab>', 'v:lua.s_tab_complete()', { expr = true})
+    --map('s', '<S-Tab>', 'v:lua.s_tab_complete()', { expr = true})
 
     -- compe --
     map('i', '<CR>', [[compe#confirm({'keys': luaeval("require ('nvim-autopairs').autopairs_cr()"), 'select': v:true })]], {silent = true, expr = true})
