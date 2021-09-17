@@ -14,6 +14,17 @@ require('lspconfig').tsserver.setup({
     capabilities = capabilities,
 })
 
+-- json-html-css (vscode-langservers-extracted) --
+require'lspconfig'.jsonls.setup{
+    capabilities = capabilities,
+}
+require'lspconfig'.html.setup{
+    capabilities = capabilities,
+}
+require'lspconfig'.cssls.setup{
+    capabilities = capabilities,
+}
+
 -- Lua --
 local system_name
 if vim.fn.has("mac") == 1 then

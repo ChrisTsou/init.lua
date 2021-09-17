@@ -13,7 +13,6 @@ require('packer').startup(function(use)
     use 'hrsh7th/nvim-compe'                              -- autocompletion
     use 'mhartington/formatter.nvim'                      -- formatter
     use 'L3MON4D3/LuaSnip'                                -- snippets
-    use 'honza/vim-snippets'
     use 'windwp/nvim-autopairs'                           -- autopair paren
     use 'phaazon/hop.nvim'                                -- hop (easymotion)
     use 'qpkorr/vim-bufkill'                              -- delete buffer without closing windows
@@ -190,11 +189,38 @@ vim.o.swapfile = false
         folders = 1,
         files = 1,
     }
+    vim.g.nvim_tree_disable_default_keybindings = 1
     local tree_cb = require('nvim-tree.config').nvim_tree_callback
     vim.g.nvim_tree_bindings = {
-      { key = "<Tab>", mode = 'n' , cb = ':NvimTreeToggle<CR>'},
+      { key = "<Tab>", mode = 'n', cb = ':NvimTreeToggle<CR>'},
       { key = "n", mode = 'n' , cb = tree_cb('cd')},
-      { key = "h", mode = 'n' , cb = tree_cb('parent_node')},
+      { key = "h", mode = 'n' , cb = tree_cb('dir_up')},
+      { key = {"<CR>", "o", "<2-LeftMouse>"}, cb = tree_cb("edit") },
+      { key = "<C-v>",                        cb = tree_cb("vsplit") },
+      { key = "<C-x>",                        cb = tree_cb("split") },
+      { key = "<C-t>",                        cb = tree_cb("tabnew") },
+      { key = "P",                            cb = tree_cb("parent_node") },
+      { key = "<BS>",                         cb = tree_cb("close_node") },
+      { key = "<S-CR>",                       cb = tree_cb("close_node") },
+      { key = "S",                            cb = tree_cb("first_sibling") },
+      { key = "T",                            cb = tree_cb("last_sibling") },
+      { key = "I",                            cb = tree_cb("toggle_ignored") },
+      { key = "H",                            cb = tree_cb("toggle_dotfiles") },
+      { key = "R",                            cb = tree_cb("refresh") },
+      { key = "a",                            cb = tree_cb("create") },
+      { key = "d",                            cb = tree_cb("remove") },
+      { key = "r",                            cb = tree_cb("rename") },
+      { key = "<C-r>",                        cb = tree_cb("full_rename") },
+      { key = "x",                            cb = tree_cb("cut") },
+      { key = "c",                            cb = tree_cb("copy") },
+      { key = "p",                            cb = tree_cb("paste") },
+      { key = "y",                            cb = tree_cb("copy_name") },
+      { key = "Y",                            cb = tree_cb("copy_path") },
+      { key = "gy",                           cb = tree_cb("copy_absolute_path") },
+      { key = "[c",                           cb = tree_cb("prev_git_item") },
+      { key = "]c",                           cb = tree_cb("next_git_item") },
+      { key = "q",                            cb = tree_cb("close") },
+      { key = "g?",                           cb = tree_cb("toggle_help") },
     }
 
 -- Plugin Configuration --
@@ -260,18 +286,17 @@ vim.o.swapfile = false
         }
     })
 
-    vim.cmd([[autocmd BufWritePost *.js,*.jsx,*.ts,*.tsx FormatWrite]])
-
     -- linter --
     require('lint').linters_by_ft = {
         -- e.g.: markdown = {'vale',} / (filetype = {linter})
-        javascript = {'eslint'},
-        javascriptreact = {'eslint'},
-        typescript = {'eslint'},
-        typescriptreact = {'eslint'},
+        javascript = {'eslint',},
+        javascriptreact = {'eslint',},
+        typescript = {'eslint',},
+        typescriptreact = {'eslint',},
         --lua = {'luacheck'},
     }
-    vim.cmd([[au TextChanged,TextChangedI,BufEnter,BufWritePost * silent! lua require('lint').try_lint()]])
+              -- TextChanged,TextChangedI,BufEnter,
+    vim.cmd([[au BufWritePost * silent! lua require('lint').try_lint()]])
 
     -- devicons --
     require'nvim-web-devicons'.setup {
@@ -510,9 +535,9 @@ vim.o.swapfile = false
     ]]})
 
     -- format on save (e.g: *.js between BufWritePost nad FormatWrite)
-    au('FormatAutogroup', {[[
-        BufWritePost *.js,*.jsx,*.ts,*.tsx FormatWrite
-    ]]})
+    --au('FormatAutogroup', {[[
+    --    BufWritePost *.js,*.jsx,*.ts,*.tsx FormatWrite
+    --]]})
 
     --lsp hover
     au('lspHover', {[[
