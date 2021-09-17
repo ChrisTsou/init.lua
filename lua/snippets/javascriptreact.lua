@@ -12,19 +12,20 @@ local p = require("luasnip.extras").partial
 local m = require("luasnip.extras").match
 local n = require("luasnip.extras").nonempty
 
-local js = require("snippets.javascript")
-
-local javascriptreact = vim.tbl_deep_extend({"keep"}, {
-    {
-        --[[ s({'rc', 'react component'}, {
+return {
+    s({ trig = 'rc', namr = 'react component' },
+        {
             t({"import React from 'react'",
-            ""}),
-            t("const "),
-            f(function(args) return args[1].env['TM_FILENAME'] end),
-            t(" = (props) => {"),
-       }) ]]
-    },
-    js
-})
-
-return javascriptreact
+               "",
+               "const "}),
+            f(function(args) return args[1].env.TM_FILENAME_BASE end, {}),
+            t({" = (props) => {",
+               "\treturn (",
+               "\t)",
+               "}",
+               "",
+               "export default "}),
+            f(function(args) return args[1].env.TM_FILENAME_BASE end, {}),
+        }
+    )
+}

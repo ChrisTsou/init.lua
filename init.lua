@@ -10,9 +10,12 @@ require('packer').startup(function(use)
 
     -- functionality --
     use 'neovim/nvim-lspconfig'                           -- lsp config
-    use 'hrsh7th/nvim-compe'                              -- autocompletion
-    use 'mhartington/formatter.nvim'                      -- formatter
+    use 'hrsh7th/cmp-nvim-lsp'                            -- nvim-cmp
+    use 'hrsh7th/cmp-buffer'
+    use 'hrsh7th/nvim-cmp'
     use 'L3MON4D3/LuaSnip'                                -- snippets
+    use 'saadparwaiz1/cmp_luasnip'                        -- nvim-cmp luansip source
+    use 'mhartington/formatter.nvim'                      -- formatter
     use 'windwp/nvim-autopairs'                           -- autopair paren
     use 'phaazon/hop.nvim'                                -- hop (easymotion)
     use 'qpkorr/vim-bufkill'                              -- delete buffer without closing windows
@@ -226,7 +229,29 @@ vim.o.swapfile = false
 -- Plugin Configuration --
     -- lsp module load --
     require('lsp')
-    require('snippets/*')
+    require('snippets')
+
+    -- nvim-cmp --
+    vim.o.completeopt='menu,menuone,noselect'
+    local cmp = require('cmp')
+    cmp.setup({
+        snippet = {
+          expand = function(args)
+            -- For `luasnip` user.
+            require('luasnip').lsp_expand(args.body)
+          end,
+        },
+        mapping = {
+          ['<C-Space>'] = cmp.mapping.complete(),
+          ['<C-e>'] = cmp.mapping.close(),
+          ['<CR>'] = cmp.mapping.confirm({ select = true }),
+        },
+        sources = {
+          { name = 'luasnip' },
+          { name = 'nvim_lsp' },
+          { name = 'buffer' },
+        }
+    })
 
     -- formatter --
     --[[ local prettier_eslint = function () -- slow, not used
@@ -331,41 +356,6 @@ vim.o.swapfile = false
     -- neoscroll --
     require('neoscroll').setup()
 
-    -- compe --
-    vim.o.completeopt = 'menuone,noselect'
-    require('compe').setup {
-        enabled = true;
-        autocomplete = true;
-        debug = false;
-        min_length = 1;
-        preselect = 'enable';
-        throttle_time = 80;
-        source_timeout = 200;
-        resolve_timeout = 800;
-        incomplete_delay = 400;
-        max_abbr_width = 100;
-        max_kind_width = 100;
-        max_menu_width = 100;
-        documentation = {
-            border = { '', '' ,'', ' ', '', '', '', ' ' }, -- the border option is the same as `|help nvim_open_win|`
-            winhighlight = "NormalFloat:CompeDocumentation,FloatBorder:CompeDocumentationBorder",
-            max_width = 120,
-            min_width = 60,
-            max_height = math.floor(vim.o.lines * 0.3),
-            min_height = 1,
-        };
-        source = {
-            path = true;
-            buffer = true;
-            tags = true;
-            calc = false;
-            nvim_lsp = true;
-            nvim_lua = true;
-            treesitter = true;
-            luasnip = true;
-        };
-    }
-
     -- Telescope --
     local actions = require('telescope.actions')
     require('telescope').setup{
@@ -399,9 +389,15 @@ vim.o.swapfile = false
 
     -- nvim-autopairs --
     require('nvim-autopairs').setup()
-    require('nvim-autopairs.completion.compe').setup({
-        --map_cr = true, --  map <CR> on insert mode
-        map_complete = true -- it will auto insert `(` after select function or method item
+    -- you need setup cmp first put this after cmp.setup()
+    require("nvim-autopairs.completion.cmp").setup({
+      -- map_cr = true, --  map <CR> on insert mode
+      map_complete = true, -- it will auto insert `(` (map_char) after select function or method item
+      auto_select = true, -- automatically select the first item
+      -- insert = false, -- use insert confirm behavior instead of replace
+      map_char = { -- modifies the function or method delimiter by filetypes
+        all = {'(', '{'},
+      }
     })
 
     -- hop --
@@ -571,13 +567,14 @@ vim.o.swapfile = false
     end
 
     local luasnip = require('luasnip')
+    local cmp = require('cmp')
     _G.tab_complete = function()
       if luasnip.expand_or_jumpable() then
         return t '<Plug>luasnip-expand-or-jump'
       elseif check_back_space() then
         return t '<Tab>'
       else
-        return vim.fn['compe#complete']()
+        return cmp.mapping.confirm({select = true})
       end
     end
 
@@ -632,11 +629,6 @@ vim.o.swapfile = false
     map('s', '<S-Tab>', [[<cmd>lua require'luasnip'.jump(-1)<Cr>]], { expr = true, silent = true})
     --map('i', '<S-Tab>', 'v:lua.s_tab_complete()', { expr = true})
     --map('s', '<S-Tab>', 'v:lua.s_tab_complete()', { expr = true})
-
-    -- compe --
-    map('i', '<CR>', [[compe#confirm({'keys': luaeval("require ('nvim-autopairs').autopairs_cr()"), 'select': v:true })]], {silent = true, expr = true})
-    map('i', '<C-space>', 'compe#complete()', {silent = true, expr = true })
-    map('i', '<C-v>', 'compe#close()', {silent = true, expr = true})
 
     -- neoscroll --
     map('', '<C-t>', [[<Cmd>lua require('neoscroll').scroll(vim.wo.scroll, true, 250)<CR>]], {noremap = true})

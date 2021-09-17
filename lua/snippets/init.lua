@@ -1,13 +1,13 @@
 local ls = require("luasnip")
 
 local javascript = require('snippets.javascript')
-local typescript = require('snippets.typescript')
--- local javascriptreact = require('snippets.javascriptreact')
+local javascriptreact = require('snippets.javascriptreact')
 
 ls.snippets = {
     javascript = javascript,
-    -- javascriptreact = javascriptreact,
-    typescript = typescript
+    javascriptreact = javascriptreact,
 }
 
 ls.filetype_extend("typescript", { "javascript" })
+ls.filetype_extend("javascriptreact", { "javascript" })
+ls.filetype_extend("typescriptreact", { "typescript", "javascript" })
