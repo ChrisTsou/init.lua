@@ -9,21 +9,17 @@ capabilities.textDocument.completion.completionItem.resolveSupport = {
   }
 }
 
--- typescript - javascript --
-require('lspconfig').tsserver.setup({
-    capabilities = capabilities,
-})
-
--- json-html-css (vscode-langservers-extracted) --
-require'lspconfig'.jsonls.setup{
-    capabilities = capabilities,
-}
-require'lspconfig'.html.setup{
-    capabilities = capabilities,
-}
-require'lspconfig'.cssls.setup{
-    capabilities = capabilities,
-}
+-- nvim-cmp setup --
+local nvim_lsp = require('lspconfig')
+local servers = { 'tsserver', 'jsonls', 'html', 'cssls', 'sumneko_lua' }
+for _, lsp in ipairs(servers) do
+  nvim_lsp[lsp].setup {
+        capabilities = capabilities
+  }
+  nvim_lsp[lsp].setup {
+      capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protocol.make_client_capabilities())
+  }
+end
 
 -- Lua --
 local system_name
@@ -43,7 +39,6 @@ table.insert(runtime_path, "lua/?/init.lua")
 
 require('lspconfig').sumneko_lua.setup({
     cmd = {'lua-language-server'},
-    capabilities = capabilities,
     settings = {
         Lua = {
             runtime = {

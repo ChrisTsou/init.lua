@@ -18,14 +18,14 @@ return {
             t({"import React from 'react'",
                "",
                "const "}),
-            f(function(args) return args[1].env.TM_FILENAME_BASE end, {}),
+            f(function(_, snip) return snip.env.TM_FILENAME_BASE or {} end, {}),
             t({" = (props) => {",
                "\treturn (",
                "\t)",
                "}",
                "",
                "export default "}),
-            f(function(args) return args[1].env.TM_FILENAME_BASE end, {}),
+            f(function(_, snip) return snip.env.TM_FILENAME_BASE or {} end, {}),
         }
     )
 }

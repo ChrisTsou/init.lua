@@ -10,4 +10,4 @@ ls.snippets = {
 
 ls.filetype_extend("typescript", { "javascript" })
 ls.filetype_extend("javascriptreact", { "javascript" })
-ls.filetype_extend("typescriptreact", { "typescript", "javascript" })
+ls.filetype_extend("typescriptreact", { "javascriptreact", "typescript", "javascript" })
