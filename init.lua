@@ -16,6 +16,7 @@ require('packer').startup(function(use)
     use 'L3MON4D3/LuaSnip'                                -- snippets
     use 'saadparwaiz1/cmp_luasnip'                        -- nvim-cmp luansip source
     use 'mhartington/formatter.nvim'                      -- formatter
+    use 'mfussenegger/nvim-lint'                          -- linter integration
     use 'windwp/nvim-autopairs'                           -- autopair paren
     use 'phaazon/hop.nvim'                                -- hop (easymotion)
     use 'qpkorr/vim-bufkill'                              -- delete buffer without closing windows
@@ -28,7 +29,6 @@ require('packer').startup(function(use)
     }
     use 'folke/which-key.nvim'                            -- display keybinds as you type them
     use 'blackCauldron7/surround.nvim'                    -- Sandwich things
-    use 'mfussenegger/nvim-lint'                          -- linter integration
     use 'b3nj5m1n/kommentary'                             -- commenting
 
     -- treesitter --
@@ -75,7 +75,6 @@ vim.o.shiftwidth = 4
 vim.o.autoindent = true
 vim.o.expandtab  = true                                   -- tab key actions
 vim.o.smarttab = true
-vim.o.autoindent = true
 vim.o.incsearch = true                                    -- highlight text while searching
 vim.o.ignorecase = true
 vim.o.smartcase = true
@@ -160,7 +159,8 @@ vim.o.swapfile = false
     vim.g.startify_bookmarks = {
         { v = '~/.config/nvim/init.lua'},
         { term = '/mnt/c/Users/chris/AppData/Local/Packages/Microsoft.WindowsTerminal_8wekyb3d8bbwe/LocalState/settings.json'},
-        { al = '~/.zsh_aliases'}
+        { al = '~/.zsh_aliases'},
+        { s = '~/.config/nvim/lua/snippets' },
     }
     vim.g.startify_commands = {
         { ch = {'Health Check', ':checkhealth'}},
@@ -179,51 +179,6 @@ vim.o.swapfile = false
         '',
         '',
         '',
-    }
-
-    -- nvim-tree --
-    vim.g.nvim_tree_auto_open = 1
-    vim.g.nvim_tree_auto_close = 1
-    vim.g.nvim_tree_auto_ignore_ft = { 'startify' }
-    vim.g.nvim_tree_lsp_diagnostics = 1
-    vim.g.nvim_tree_git_hl = 0       -- disable git integration, too slow
-    vim.g.nvim_tree_show_icons = {   -- same for icons
-        git = 0,
-        folders = 1,
-        files = 1,
-    }
-    vim.g.nvim_tree_disable_default_keybindings = 1
-    local tree_cb = require('nvim-tree.config').nvim_tree_callback
-    vim.g.nvim_tree_bindings = {
-      { key = "<Tab>", mode = 'n', cb = ':NvimTreeToggle<CR>'},
-      { key = "n", mode = 'n' , cb = tree_cb('cd')},
-      { key = "h", mode = 'n' , cb = tree_cb('dir_up')},
-      { key = {"<CR>", "o", "<2-LeftMouse>"}, cb = tree_cb("edit") },
-      { key = "<C-v>",                        cb = tree_cb("vsplit") },
-      { key = "<C-x>",                        cb = tree_cb("split") },
-      { key = "<C-t>",                        cb = tree_cb("tabnew") },
-      { key = "P",                            cb = tree_cb("parent_node") },
-      { key = "<BS>",                         cb = tree_cb("close_node") },
-      { key = "<S-CR>",                       cb = tree_cb("close_node") },
-      { key = "S",                            cb = tree_cb("first_sibling") },
-      { key = "T",                            cb = tree_cb("last_sibling") },
-      { key = "I",                            cb = tree_cb("toggle_ignored") },
-      { key = "H",                            cb = tree_cb("toggle_dotfiles") },
-      { key = "R",                            cb = tree_cb("refresh") },
-      { key = "a",                            cb = tree_cb("create") },
-      { key = "d",                            cb = tree_cb("remove") },
-      { key = "r",                            cb = tree_cb("rename") },
-      { key = "<C-r>",                        cb = tree_cb("full_rename") },
-      { key = "x",                            cb = tree_cb("cut") },
-      { key = "c",                            cb = tree_cb("copy") },
-      { key = "p",                            cb = tree_cb("paste") },
-      { key = "y",                            cb = tree_cb("copy_name") },
-      { key = "Y",                            cb = tree_cb("copy_path") },
-      { key = "gy",                           cb = tree_cb("copy_absolute_path") },
-      { key = "[c",                           cb = tree_cb("prev_git_item") },
-      { key = "]c",                           cb = tree_cb("next_git_item") },
-      { key = "q",                            cb = tree_cb("close") },
-      { key = "g?",                           cb = tree_cb("toggle_help") },
     }
 
 -- Plugin Configuration --
@@ -254,23 +209,10 @@ vim.o.swapfile = false
     })
 
     -- formatter --
-    --[[ local prettier_eslint = function () -- slow, not used
-        return {
-            exe = 'prettier-eslint',
-            args = {
-                '--stdin',
-                '--stdin-filepath', vim.api.nvim_buf_get_name(0),
-                '--prettier-path', './node_modules/prettier',
-                '--eslint-path', './node_modules/eslint'
-            },
-            stdin = true
-        }
-    end ]]
-
     local prettier = function()
          return {
              exe = "prettier",
-             args = {"--stdin-filepath", vim.api.nvim_buf_get_name(0)},
+             args = {"--stdin-filepath", vim.fn.fnameescape(vim.api.nvim_buf_get_name(0)), '--single-quote'},
              stdin = true
          }
     end
@@ -282,7 +224,7 @@ vim.o.swapfile = false
             lua = {
                 function()
                   return {
-                    exe = "lua-format",
+                    exe = "lua-format", -- check stylua
                     stdin = true
                   }
                 end
@@ -391,12 +333,11 @@ vim.o.swapfile = false
     require('nvim-autopairs').setup()
     -- you need setup cmp first put this after cmp.setup()
     require("nvim-autopairs.completion.cmp").setup({
-      -- map_cr = true, --  map <CR> on insert mode
+      map_cr = true, --  map <CR> on insert mode
       map_complete = true, -- it will auto insert `(` (map_char) after select function or method item
       auto_select = true, -- automatically select the first item
       -- insert = false, -- use insert confirm behavior instead of replace
       map_char = { -- modifies the function or method delimiter by filetypes
-        all = {'(', '{'},
       }
     })
 
@@ -444,11 +385,16 @@ vim.o.swapfile = false
             },
         },
     })
-        -- treesiter plugins --
-        require('nvim-ts-autotag').setup()
+    -- treesiter plugins --
+    require('nvim-ts-autotag').setup({
+        autotag = {
+            enable = true,
+        }
+    })
 
     -- surround.nvim --
     require "surround".setup {
+        mappings_style = 'sandwich',
         prefix = 'S'
     }
 
@@ -484,6 +430,61 @@ vim.o.swapfile = false
         }
     })
 
+    -- nvim-tree --
+    vim.g.nvim_tree_auto_ignore_ft = { 'startify' }
+    vim.g.nvim_tree_git_hl = 0       -- disable git integration, too slow
+    vim.g.nvim_tree_show_icons = {   -- same for icons
+        git = 0,
+        folders = 1,
+        files = 1,
+    }
+    -- nvim-tree --
+    local tree_cb = require('nvim-tree.config').nvim_tree_callback
+
+    require('nvim-tree').setup({
+        open_on_setup = true,
+        auto_close = true,
+        diagnostics = {
+            enable = true
+        },
+        view = {
+            mappings = {
+                custom_only = true,
+                list = {
+                    { key = "<Tab>", mode = 'n', cb = ':NvimTreeToggle<CR>'},
+                    { key = "n", mode = 'n' , cb = tree_cb('cd')},
+                    { key = "h", mode = 'n' , cb = tree_cb('dir_up')},
+                    { key = {"<CR>", "o", "<2-LeftMouse>"}, cb = tree_cb("edit") },
+                    { key = "<C-v>",                        cb = tree_cb("vsplit") },
+                    { key = "<C-x>",                        cb = tree_cb("split") },
+                    { key = "<C-t>",                        cb = tree_cb("tabnew") },
+                    { key = "P",                            cb = tree_cb("parent_node") },
+                    { key = "<BS>",                         cb = tree_cb("close_node") },
+                    { key = "<S-CR>",                       cb = tree_cb("close_node") },
+                    { key = "S",                            cb = tree_cb("first_sibling") },
+                    { key = "T",                            cb = tree_cb("last_sibling") },
+                    { key = "I",                            cb = tree_cb("toggle_ignored") },
+                    { key = "H",                            cb = tree_cb("toggle_dotfiles") },
+                    { key = "R",                            cb = tree_cb("refresh") },
+                    { key = "a",                            cb = tree_cb("create") },
+                    { key = "d",                            cb = tree_cb("remove") },
+                    { key = "r",                            cb = tree_cb("rename") },
+                    { key = "<C-r>",                        cb = tree_cb("full_rename") },
+                    { key = "x",                            cb = tree_cb("cut") },
+                    { key = "c",                            cb = tree_cb("copy") },
+                    { key = "p",                            cb = tree_cb("paste") },
+                    { key = "y",                            cb = tree_cb("copy_name") },
+                    { key = "Y",                            cb = tree_cb("copy_path") },
+                    { key = "gy",                           cb = tree_cb("copy_absolute_path") },
+                    { key = "[c",                           cb = tree_cb("prev_git_item") },
+                    { key = "]c",                           cb = tree_cb("next_git_item") },
+                    { key = "q",                            cb = tree_cb("close") },
+                    { key = "g?",                           cb = tree_cb("toggle_help") },
+                }
+            }
+        }
+    })
+
 -- AutoCommands --
     local function au(name, commands)
       local cmds = {}
@@ -504,9 +505,6 @@ vim.o.swapfile = false
 
       vim.cmd(cmd)
     end
-
-    -- Nvim-tree --
-    --vim.cmd([[autocmd UIEnter * NvimTreeOpen ]])
 
     -- startify --
     au('startify', {[[BufDelete * if empty(filter(tabpagebuflist(), '!buflisted(v:val)')) | Startify | endif]]})
