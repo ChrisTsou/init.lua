@@ -192,7 +192,6 @@ vim.o.swapfile = false
     cmp.setup({
         snippet = {
           expand = function(args)
-            -- For `luasnip` user.
             require('luasnip').lsp_expand(args.body)
           end,
         },
@@ -207,6 +206,11 @@ vim.o.swapfile = false
           { name = 'buffer' },
         }
     })
+
+    -- nvim-autopairs --
+    require('nvim-autopairs').setup()
+    local cmp_autopairs = require('nvim-autopairs.completion.cmp')
+    cmp.event:on( 'confirm_done', cmp_autopairs.on_confirm_done({  map_char = { tex = '' } }))
 
     -- formatter --
     local prettier = function()
@@ -328,18 +332,6 @@ vim.o.swapfile = false
             }
         }
     }
-
-    -- nvim-autopairs --
-    require('nvim-autopairs').setup()
-    -- you need setup cmp first put this after cmp.setup()
-    require("nvim-autopairs.completion.cmp").setup({
-      map_cr = true, --  map <CR> on insert mode
-      map_complete = true, -- it will auto insert `(` (map_char) after select function or method item
-      auto_select = true, -- automatically select the first item
-      -- insert = false, -- use insert confirm behavior instead of replace
-      map_char = { -- modifies the function or method delimiter by filetypes
-      }
-    })
 
     -- hop --
     require('hop').setup({ keys = 'cieansthbyouvwdlgxjkpfmr'})
@@ -529,9 +521,9 @@ vim.o.swapfile = false
     ]]})
 
     -- format on save (e.g: *.js between BufWritePost nad FormatWrite)
-    --au('FormatAutogroup', {[[
-    --    BufWritePost *.js,*.jsx,*.ts,*.tsx FormatWrite
-    --]]})
+    au('FormatAutogroup', {[[
+       BufWritePost *.js,*.jsx,*.ts,*.tsx FormatWrite
+    ]]})
 
     --lsp hover
     au('lspHover', {[[
@@ -539,6 +531,7 @@ vim.o.swapfile = false
     ]]})
 
     -- WSL yank support
+    --[[
     vim.g.wsl_clip_exe_location = '/mnt/c/Windows/System32/clip.exe'
     vim.cmd([[
       if executable(g:wsl_clip_exe_location)
@@ -547,7 +540,7 @@ vim.o.swapfile = false
               autocmd TextYankPost * if v:event.operator ==# 'y' | call system(g:wsl_clip_exe_location, @0) | endif
           augroup END
       endif
-    ]])
+    ]] --needs a paren here --]]
 
 -- Custom Functions --
     -- Utility functions for compe and luasnip
