@@ -10,9 +10,9 @@ require('packer').startup(function(use)
 
     -- functionality --
     use 'neovim/nvim-lspconfig'                           -- lsp config
-    use 'hrsh7th/cmp-nvim-lsp'                            -- nvim-cmp
+    use 'hrsh7th/nvim-cmp'                                -- nvim-cmp
+    use 'hrsh7th/cmp-nvim-lsp'
     use 'hrsh7th/cmp-buffer'
-    use 'hrsh7th/nvim-cmp'
     use 'L3MON4D3/LuaSnip'                                -- snippets
     use 'saadparwaiz1/cmp_luasnip'                        -- nvim-cmp luansip source
     use 'mhartington/formatter.nvim'                      -- formatter
@@ -36,7 +36,6 @@ require('packer').startup(function(use)
         'nvim-treesitter/nvim-treesitter',
         run = ':TSUpdate'
     }
-    use 'windwp/nvim-ts-autotag'
 
     -- appearance --
     use 'christianchiarulli/nvcode-color-schemes.vim'
@@ -376,12 +375,6 @@ vim.o.swapfile = false
               node_decremental = "<C-n>",
             },
         },
-    })
-    -- treesiter plugins --
-    require('nvim-ts-autotag').setup({
-        autotag = {
-            enable = true,
-        }
     })
 
     -- surround.nvim --
