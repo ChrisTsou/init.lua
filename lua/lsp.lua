@@ -1,38 +1,19 @@
--- enable snippet Support (dont forget to add it to server below) --
-local capabilities = vim.lsp.protocol.make_client_capabilities()
-capabilities.textDocument.completion.completionItem.snippetSupport = true
-capabilities.textDocument.completion.completionItem.resolveSupport = {
-  properties = {
-    'documentation',
-    'detail',
-    'additionalTextEdits',
-  }
-}
-
--- nvim-cmp setup --
 local nvim_lsp = require('lspconfig')
-local servers = { 'tsserver', 'jsonls', 'html', 'cssls', 'sumneko_lua' }
+
+-- cmp capabilities --
+local capabilities = vim.lsp.protocol.make_client_capabilities()
+capabilities = require('cmp_nvim_lsp').update_capabilities(capabilities)
+
+-- lsp setups --
+-- DO NOT SETUP TWICE --
+local servers = { 'tsserver', 'jsonls', 'html', 'cssls', }
 for _, lsp in ipairs(servers) do
-  nvim_lsp[lsp].setup {
+  nvim_lsp[lsp].setup({
         capabilities = capabilities
-  }
-  nvim_lsp[lsp].setup {
-      capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protocol.make_client_capabilities())
-  }
+  })
 end
 
 -- Lua --
-local system_name
-if vim.fn.has("mac") == 1 then
-    system_name = "macOS"
-elseif vim.fn.has("unix") == 1 then
-    system_name = "Linux"
-elseif vim.fn.has('win32') == 1 then
-    system_name = "Windows"
-else
-    print("Unsupported system for sumneko")
-end
-
 local runtime_path = vim.split(package.path, ';')
 table.insert(runtime_path, "lua/?.lua")
 table.insert(runtime_path, "lua/?/init.lua")

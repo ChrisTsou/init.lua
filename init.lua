@@ -13,8 +13,9 @@ require('packer').startup(function(use)
     use 'hrsh7th/nvim-cmp'                                -- nvim-cmp
     use 'hrsh7th/cmp-nvim-lsp'
     use 'hrsh7th/cmp-buffer'
-    use 'L3MON4D3/LuaSnip'                                -- snippets
     use 'saadparwaiz1/cmp_luasnip'                        -- nvim-cmp luansip source
+    use 'L3MON4D3/LuaSnip'                                -- snippet
+    use "rafamadriz/friendly-snippets"                    -- actual snippets
     use 'mhartington/formatter.nvim'                      -- formatter
     use 'mfussenegger/nvim-lint'                          -- linter integration
     use 'windwp/nvim-autopairs'                           -- autopair paren
@@ -183,6 +184,7 @@ vim.o.swapfile = false
 -- Plugin Configuration --
     -- lsp module load --
     require('lsp')
+    -- luasnip --
     require('snippets')
 
     -- nvim-cmp --
@@ -197,7 +199,10 @@ vim.o.swapfile = false
         mapping = {
           ['<C-Space>'] = cmp.mapping.complete(),
           ['<C-e>'] = cmp.mapping.close(),
-          ['<CR>'] = cmp.mapping.confirm({ select = true }),
+          ['<CR>'] = cmp.mapping.confirm({
+              behavior = cmp.ConfirmBehavior.Replace,
+              select = true
+          }),
         },
         sources = {
           { name = 'luasnip' },
@@ -551,26 +556,25 @@ vim.o.swapfile = false
     end
 
     local luasnip = require('luasnip')
-    local cmp = require('cmp')
     _G.tab_complete = function()
       if luasnip.expand_or_jumpable() then
         return t '<Plug>luasnip-expand-or-jump'
       elseif check_back_space() then
         return t '<Tab>'
       else
-        return cmp.mapping.confirm({select = true})
+          cmp.complete()
       end
+        return ""
     end
 
-    --[[ _G.s_tab_complete = function()
-      if vim.fn.pumvisible() == 1 then
-        return t '<C-p>'
-      --elseif vim.fn["UltiSnips#CanJumpBackwards"]() == 1 then
-      --  return t '<C-R>=UltiSnips#JumpBackwards()<CR>'
+    _G.s_tab_complete = function()
+      if luasnip.jumpable(-1) then
+        return t("<Plug>luasnip-jump-prev")
       else
-        return t '<S-Tab>'
+        return t "<S-Tab>"
       end
-    end ]]
+        return ""
+    end
 
 -- Mappings --
     local wk = require("which-key")
@@ -608,11 +612,9 @@ vim.o.swapfile = false
 
     -- tab navigation --
     map('i', '<Tab>', 'v:lua.tab_complete()', { expr = true})
-    map('s', '<Tab>', [[<cmd>lua require('luasnip').jump(1)<Cr>]], { expr = true})
-    map('i', '<S-Tab>', [[<cmd>lua require'luasnip'.jump(-1)<Cr>]], { expr = true, silent = true})
-    map('s', '<S-Tab>', [[<cmd>lua require'luasnip'.jump(-1)<Cr>]], { expr = true, silent = true})
-    --map('i', '<S-Tab>', 'v:lua.s_tab_complete()', { expr = true})
-    --map('s', '<S-Tab>', 'v:lua.s_tab_complete()', { expr = true})
+    map('s', '<Tab>', 'v:lua.tab_complete()', { expr = true})
+    map('i', '<S-Tab>', 'v:lua.s_tab_complete()', { expr = true, silent = true})
+    map('s', '<S-Tab>', 'v:lua.s_tab_complete()', { expr = true, silent = true})
 
     -- neoscroll --
     map('', '<C-t>', [[<Cmd>lua require('neoscroll').scroll(vim.wo.scroll, true, 250)<CR>]], {noremap = true})
