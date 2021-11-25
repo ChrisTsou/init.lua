@@ -1,3 +1,4 @@
+local util = require 'lspconfig/util'
 local nvim_lsp = require('lspconfig')
 
 -- cmp capabilities --
@@ -6,7 +7,7 @@ capabilities = require('cmp_nvim_lsp').update_capabilities(capabilities)
 
 -- lsp setups --
 -- DO NOT SETUP TWICE --
-local servers = { 'tsserver', 'jsonls', 'html', 'cssls', }
+local servers = { 'tsserver', 'jsonls', 'html', 'cssls', 'eslint'}
 for _, lsp in ipairs(servers) do
   nvim_lsp[lsp].setup({
         capabilities = capabilities

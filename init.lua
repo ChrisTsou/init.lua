@@ -19,6 +19,7 @@ require('packer').startup(function(use)
     use 'mhartington/formatter.nvim'                      -- formatter
     use 'mfussenegger/nvim-lint'                          -- linter integration
     use 'windwp/nvim-autopairs'                           -- autopair paren
+    use 'windwp/nvim-ts-autotag'                          -- autotag html
     use 'phaazon/hop.nvim'                                -- hop (easymotion)
     use 'qpkorr/vim-bufkill'                              -- delete buffer without closing windows
     use {                                                 -- fuzzy find anything
@@ -31,6 +32,8 @@ require('packer').startup(function(use)
     use 'folke/which-key.nvim'                            -- display keybinds as you type them
     use 'blackCauldron7/surround.nvim'                    -- Sandwich things
     use 'b3nj5m1n/kommentary'                             -- commenting
+
+    use 'kdheepak/lazygit.nvim'                           -- lazygit integration
 
     -- treesitter --
     use {
@@ -68,7 +71,7 @@ end)
 -- Neovim options --
 vim.o.termguicolors = true                                -- Opaque Background
 vim.o.mouse = 'a'                                         -- enable mouse scrolling
---vim.o.clipboard = vim.o.clipboard .. 'unnamedplus'      -- use system clipboard by default (slow startup)
+vim.o.clipboard = vim.o.clipboard .. 'unnamedplus'      -- use system clipboard by default (slow startup)
 vim.o.tabstop = 4                                         -- tab width
 vim.o.softtabstop = 4
 vim.o.shiftwidth = 4
@@ -212,7 +215,9 @@ vim.o.swapfile = false
     })
 
     -- nvim-autopairs --
-    require('nvim-autopairs').setup()
+    require('nvim-autopairs').setup({
+        check_ts = true,
+    })
     local cmp_autopairs = require('nvim-autopairs.completion.cmp')
     cmp.event:on( 'confirm_done', cmp_autopairs.on_confirm_done({  map_char = { tex = '' } }))
 
@@ -249,6 +254,18 @@ vim.o.swapfile = false
             typescriptreact = {
                 prettier
             },
+            json = {
+                prettier
+            },
+            css = {
+                prettier
+            },
+            html = {
+                prettier
+            },
+            vue = {
+                prettier
+            },
             rust = {
                 function()
                     return {
@@ -262,16 +279,17 @@ vim.o.swapfile = false
     })
 
     -- linter --
-    require('lint').linters_by_ft = {
+    --[[ require('lint').linters_by_ft = {
         -- e.g.: markdown = {'vale',} / (filetype = {linter})
         javascript = {'eslint',},
         javascriptreact = {'eslint',},
         typescript = {'eslint',},
         typescriptreact = {'eslint',},
+        vue = {'eslint',}
         --lua = {'luacheck'},
     }
-              -- TextChanged,TextChangedI,BufEnter,
-    vim.cmd([[au BufWritePost * silent! lua require('lint').try_lint()]])
+              -- TextChanged,TextChangedI,BufEnter, ]]
+    -- vim.cmd([[au BufWritePost * silent! lua require('lint').try_lint()]])
 
     -- devicons --
     require'nvim-web-devicons'.setup {
@@ -380,6 +398,11 @@ vim.o.swapfile = false
               node_decremental = "<C-n>",
             },
         },
+        -- nvim-ts-autotag --
+        -- requires treesitter tsx --
+        autotag = {
+            enable = true
+        }
     })
 
     -- surround.nvim --
@@ -520,13 +543,14 @@ vim.o.swapfile = false
 
     -- format on save (e.g: *.js between BufWritePost nad FormatWrite)
     au('FormatAutogroup', {[[
-       BufWritePost *.js,*.jsx,*.ts,*.tsx FormatWrite
+       BufWritePost *.js,*.jsx,*.ts,*.tsx,*.json,*.css,*.html,*.vue FormatWrite
     ]]})
 
     --lsp hover
-    au('lspHover', {[[
-        CursorHold * lua vim.lsp.buf.hover()
-    ]]})
+    vim.cmd([[
+        let blacklist = ['vue',]
+        au BufWritePre * if index(blacklist, &ft) < 0 | lua vim.lsp.buf.hover()
+    ]])
 
     -- WSL yank support
     --[[
@@ -656,6 +680,7 @@ vim.o.swapfile = false
                 ss = {':Telescope git_status<CR>', 'status'},
                 sh = {':Telescope git_stash<CR>', 'stash'},
             },
+            z = {':LazyGit<CR>', 'lazygit'},
             -- lsp --
             r = {':Telescope lsp_references<CR>', 'lsp references'},
             o = {':Telescope lsp_document_symbols<CR>', 'lsp symbols'},
