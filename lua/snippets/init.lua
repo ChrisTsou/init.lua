@@ -10,6 +10,6 @@ ls.snippets = {
 
 ls.filetype_extend("typescript", { "javascript" })
 ls.filetype_extend("javascriptreact", { "javascript" })
-ls.filetype_extend("typescriptreact", { "javascriptreact", "typescript", "javascript" }) ]]
-
+ls.filetype_extend("typescriptreact", { "javascriptreact", "typescript", "javascript" })
+ ]]
 require("luasnip/loaders/from_vscode").lazy_load()

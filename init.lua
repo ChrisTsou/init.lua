@@ -10,6 +10,7 @@ require('packer').startup(function(use)
 
     -- functionality --
     use 'neovim/nvim-lspconfig'                           -- lsp config
+    use 'williamboman/nvim-lsp-installer'                 -- lsp installer
     use 'hrsh7th/nvim-cmp'                                -- nvim-cmp
     use 'hrsh7th/cmp-nvim-lsp'
     use 'hrsh7th/cmp-buffer'
@@ -187,6 +188,7 @@ vim.o.swapfile = false
 -- Plugin Configuration --
     -- lsp module load --
     require('lsp')
+
     -- luasnip --
     require('snippets')
 
@@ -279,7 +281,7 @@ vim.o.swapfile = false
     })
 
     -- linter --
-    --[[ require('lint').linters_by_ft = {
+    require('lint').linters_by_ft = {
         -- e.g.: markdown = {'vale',} / (filetype = {linter})
         javascript = {'eslint',},
         javascriptreact = {'eslint',},
@@ -288,8 +290,8 @@ vim.o.swapfile = false
         vue = {'eslint',}
         --lua = {'luacheck'},
     }
-              -- TextChanged,TextChangedI,BufEnter, ]]
-    -- vim.cmd([[au BufWritePost * silent! lua require('lint').try_lint()]])
+              -- TextChanged,TextChangedI,BufEnter,
+    vim.cmd([[au BufWritePost * silent! lua require('lint').try_lint()]])
 
     -- devicons --
     require'nvim-web-devicons'.setup {
@@ -464,7 +466,7 @@ vim.o.swapfile = false
             mappings = {
                 custom_only = true,
                 list = {
-                    { key = "<Tab>", mode = 'n', cb = ':NvimTreeToggle<CR>'},
+                    { key = "<Tab>", mode = 'n', cb = tree_cb("close")},
                     { key = "n", mode = 'n' , cb = tree_cb('cd')},
                     { key = "h", mode = 'n' , cb = tree_cb('dir_up')},
                     { key = {"<CR>", "o", "<2-LeftMouse>"}, cb = tree_cb("edit") },
