@@ -544,9 +544,9 @@ vim.o.swapfile = false
     ]]})
 
     -- format on save (e.g: *.js between BufWritePost nad FormatWrite)
-    au('FormatAutogroup', {[[
-       BufWritePost *.js,*.jsx,*.ts,*.tsx,*.json,*.css,*.html,*.vue FormatWrite
-    ]]})
+    -- au('FormatAutogroup', {[[
+       -- BufWritePost *.js,*.jsx,*.ts,*.tsx,*.json,*.css,*.html,*.vue FormatWrite
+    -- ]]})
 
     --lsp hover
     vim.cmd([[
