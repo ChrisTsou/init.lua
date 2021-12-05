@@ -70,7 +70,7 @@ require('packer').startup(function(use)
 
 end)
 -- Neovim options --
-vim.o.termguicolors = true                                -- Opaque Background
+vim.o.termguicolors = true                                -- 24bit color
 vim.o.mouse = 'a'                                         -- enable mouse scrolling
 vim.o.clipboard = vim.o.clipboard .. 'unnamedplus'      -- use system clipboard by default (slow startup)
 vim.o.tabstop = 4                                         -- tab width
@@ -544,9 +544,9 @@ vim.o.swapfile = false
     ]]})
 
     -- format on save (e.g: *.js between BufWritePost nad FormatWrite)
-    -- au('FormatAutogroup', {[[
-       -- BufWritePost *.js,*.jsx,*.ts,*.tsx,*.json,*.css,*.html,*.vue FormatWrite
-    -- ]]})
+    au('FormatAutogroup', {[[
+       BufWritePost *.js,*.jsx,*.ts,*.tsx,*.json,*.css,*.html,*.vue FormatWrite
+    ]]})
 
     --lsp hover
     vim.cmd([[
