@@ -550,7 +550,7 @@ vim.o.swapfile = false
 
     --lsp hover
     vim.cmd([[
-        let blacklist = ['vue',]
+        let blacklist = []
         au BufWritePre * if index(blacklist, &ft) < 0 | lua vim.lsp.buf.hover()
     ]])
 
