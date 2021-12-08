@@ -551,7 +551,7 @@ vim.o.swapfile = false
     --lsp hover
     vim.cmd([[
         let blacklist = []
-        au BufWritePre * if index(blacklist, &ft) < 0 | lua vim.lsp.buf.hover()
+        au CursorHold * if index(blacklist, &ft) < 0 | lua vim.lsp.buf.hover()
     ]])
 
     -- WSL yank support
@@ -686,7 +686,8 @@ vim.o.swapfile = false
             -- lsp --
             r = {':Telescope lsp_references<CR>', 'lsp references'},
             o = {':Telescope lsp_document_symbols<CR>', 'lsp symbols'},
-            d = {':Telescope lsp_document_diagnostics<CR>', 'lsp diagnostics'}
+            d = {':Telescope lsp_document_diagnostics<CR>', 'lsp diagnostics'},
+            v = {':Telescope live_grep<CR>', 'live grep'}
         },
         ['<leader>g'] = {
             name = 'go',

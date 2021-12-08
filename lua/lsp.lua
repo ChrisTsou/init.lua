@@ -11,13 +11,25 @@ lsp_installer.on_server_ready(function(server)
         capabilities = capabilities
     }
 
+    -- vue vls --
+    if server.name == "vuels" then
+        opts.init_options = {
+            config ={
+                vetur = {
+                    completion = {
+                        autoImport = true
+                    },
+                    useWorkspaceDependencies = true
+                }
+            }
+        }
+    end
+
     -- lua --
     if server.name == "sumneko_lua" then
         local runtime_path = vim.split(package.path, ';')
         table.insert(runtime_path, "lua/?.lua")
         table.insert(runtime_path, "lua/?/init.lua")
-
-        opts.cmd = {'lua-language-server'};
 
         opts.settings = {
             Lua = {
