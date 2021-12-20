@@ -42,8 +42,8 @@ grepprg = 'rg --vimgrep',                            -- use rg as default greppe
 scrolloff = 8,                                       -- for context when scrolling (neoscroll needs this)
 sidescrolloff = 8,
 hidden = true,                                       -- switch buffer without saving
-timeoutlen = 100,                                    -- time to wait for a mapped sequence to complete (in milliseconds)
-updatetime = 1000,                                   -- time to trigger things like nvim-cursorword
+timeoutlen = 200,                                    -- time to wait for a mapped sequence to complete (in milliseconds)
+updatetime = 1000,                                   -- time to trigger things like nvim-cursorword (if not using plugin)
 completeopt = { "menuone", "noselect" },             -- for cmp
 signcolumn = "yes",                                  -- always show the sign column, otherwise it would shift the text each time
 
@@ -67,6 +67,10 @@ vim.opt.shortmess:append "c"
 for k, v in pairs(options) do
   vim.opt[k] = v
 end
+
+-- show spaces and eol as --
+-- vim.opt.listchars:append("space:⋅")
+-- vim.opt.listchars:append("eol:↴")
 
 vim.cmd "set whichwrap+=<,>,[,],h,l"
 vim.cmd [[set iskeyword+=-]]
