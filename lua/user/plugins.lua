@@ -58,7 +58,6 @@ return packer.startup(function(use)
     use 'windwp/nvim-autopairs'                           -- autopair paren
     use 'windwp/nvim-ts-autotag'                          -- autotag html
     use 'phaazon/hop.nvim'                                -- hop (easymotion)
-    use 'qpkorr/vim-bufkill'                              -- delete buffer without closing windows
     use {                                                 -- fuzzy find anything
         'nvim-telescope/telescope.nvim',
         requires = {
@@ -98,6 +97,7 @@ return packer.startup(function(use)
         'akinsho/nvim-bufferline.lua',                    -- tabs
         requires = 'kyazdani42/nvim-web-devicons'
     }
+    use "moll/vim-bbye"                                   -- better bdelete
     use "goolord/alpha-nvim"
     use {
         'kyazdani42/nvim-tree.lua',                       -- file tree

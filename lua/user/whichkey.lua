@@ -63,7 +63,7 @@ local mappings = {
     },
     ['<leader>c'] = {
         name = 'close',
-        b = {':BD<CR>', 'buffer'},
+        b = {':Bdelete<CR>', 'buffer'},
         w = {':q<CR>', 'window'},
     },
     ['<leader>p'] = {
