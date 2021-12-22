@@ -70,7 +70,8 @@ local mappings = {
         name = 'Packer',
         s = {'<cmd>PackerSync<CR>', 'Sync'},
         t = {'<cmd>PackerStatus<CR>', 'Status'}
-    }
+    },
+    ['<leader>e'] = {':!npm run lint:fix<CR>', 'lint fix'}
 }
 which_key.register(mappings, opts)
 
