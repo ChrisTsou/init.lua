@@ -19,6 +19,29 @@ local opts = {
     nowait = true, -- use `nowait` when creating keymaps
 }
 
+local function autoFormatToggle()
+    local af = vim.g.personal_autoformat
+    if not af then
+        vim.cmd([[
+            augroup personal_autoformat
+                autocmd BufWritePre <buffer> lua vim.lsp.buf.formatting_sync()
+            augroup END
+        ]])
+
+        print('autoformat on')
+    else
+        vim.cmd([[
+            augroup personal_autoformat
+                autocmd!
+            augroup END
+        ]])
+
+        print('autoformat off')
+    end
+
+    vim.g.personal_autoformat = not vim.g.personal_autoformat
+end
+
 -- normal mode --
 local mappings = {
     ['<Tab>'] = { ':NvimTreeToggle<CR>', 'Explorer'},
@@ -27,6 +50,7 @@ local mappings = {
         a = {[[<Cmd>lua require('telescope.builtin').lsp_code_actions(require('telescope.themes').get_cursor({}))<CR>]], 'code actions'},
         w = {':w<CR>', 'write buffer'},
         h = {[[<Cmd>lua require('hop').hint_words()<CR>]], 'hop'},
+        tf = {autoFormatToggle, 'auto format toggle'},
         f = {':Format<CR>', 'format'},
         rn = {'<cmd>lua vim.lsp.buf.rename()<CR>', 'lsp rename'},
     },
