@@ -42,6 +42,7 @@ M.setup = function()
 
     vim.lsp.handlers["textDocument/signatureHelp"] = vim.lsp.with(vim.lsp.handlers.signature_help, {
         border = "rounded",
+        focusable = false,
     })
 end
 
@@ -51,9 +52,9 @@ local function lsp_highlight_document(client)
         vim.api.nvim_exec(
             [[
             augroup lsp_document_highlight
-            autocmd! * <buffer>
-            autocmd CursorHold <buffer> lua vim.lsp.buf.document_highlight()
-            autocmd CursorMoved <buffer> lua vim.lsp.buf.clear_references()
+                autocmd! * <buffer>
+                autocmd CursorHold <buffer> lua vim.lsp.buf.document_highlight()
+                autocmd CursorMoved <buffer> lua vim.lsp.buf.clear_references()
             augroup END
             ]],
             false
@@ -104,6 +105,7 @@ end
 
 local capabilities = vim.lsp.protocol.make_client_capabilities()
 
+-- nvim-cmp completion capabilities
 local status_ok, cmp_nvim_lsp = pcall(require, "cmp_nvim_lsp")
 if not status_ok then
     return

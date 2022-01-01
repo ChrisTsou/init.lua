@@ -20,26 +20,8 @@ local opts = {
 }
 
 local function autoFormatToggle()
-    local af = vim.g.personal_autoformat
-    if not af then
-        vim.cmd([[
-            augroup personal_autoformat
-                autocmd BufWritePre <buffer> lua vim.lsp.buf.formatting_sync()
-            augroup END
-        ]])
-
-        print('autoformat on')
-    else
-        vim.cmd([[
-            augroup personal_autoformat
-                autocmd!
-            augroup END
-        ]])
-
-        print('autoformat off')
-    end
-
     vim.g.personal_autoformat = not vim.g.personal_autoformat
+    print('autoformat:', vim.g.personal_autoformat)
 end
 
 -- normal mode --
