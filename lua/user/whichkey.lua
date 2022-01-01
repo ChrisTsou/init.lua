@@ -46,12 +46,13 @@ end
 local mappings = {
     ['<Tab>'] = { ':NvimTreeToggle<CR>', 'Explorer'},
     [ 'K' ] = {'<Cmd>lua vim.lsp.buf.hover()<CR>', 'lsp hover'},
+    ['D'] = {function() vim.diagnostic.open_float() end, 'diagnostic float'},
     ['<leader>'] = {
         a = {[[<Cmd>lua require('telescope.builtin').lsp_code_actions(require('telescope.themes').get_cursor({}))<CR>]], 'code actions'},
         w = {':w<CR>', 'write buffer'},
         h = {[[<Cmd>lua require('hop').hint_words()<CR>]], 'hop'},
         tf = {autoFormatToggle, 'auto format toggle'},
-        f = {':Format<CR>', 'format'},
+        f = {function() vim.lsp.buf.formatting() end, 'format'},
         rn = {'<cmd>lua vim.lsp.buf.rename()<CR>', 'lsp rename'},
     },
     ['<leader>l'] = {
