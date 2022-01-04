@@ -5,7 +5,10 @@ return {
                     completion = {
                         autoImport = true
                     },
-                    useWorkspaceDependencies = true
+                    useWorkspaceDependencies = true,
+                    experimental = {
+                        templateInterpolationService = true,
+                    }
                 }
             }
         }
