@@ -52,9 +52,9 @@ return packer.startup(function(use)
     use 'hrsh7th/cmp-buffer'
     use 'saadparwaiz1/cmp_luasnip'                        -- nvim-cmp luansip source
     use 'L3MON4D3/LuaSnip'                                -- snippet
-    use "rafamadriz/friendly-snippets"                    -- actual snippets
+    use 'rafamadriz/friendly-snippets'                    -- actual snippets
 
-    use "jose-elias-alvarez/null-ls.nvim"                 -- for formatters and linters
+    use 'jose-elias-alvarez/null-ls.nvim'                 -- for formatters and linters
     use 'windwp/nvim-autopairs'                           -- autopair paren
     use 'windwp/nvim-ts-autotag'                          -- autotag html
     use 'phaazon/hop.nvim'                                -- hop (easymotion)
@@ -66,7 +66,8 @@ return packer.startup(function(use)
         }
     }
     use 'folke/which-key.nvim'                            -- display keybinds as you type them
-    use "numToStr/Comment.nvim"                           -- Easily comment stuff
+    use 'numToStr/Comment.nvim'                           -- Easily comment stuff
+    use 'tpope/vim-surround'                              -- surround/sandwich
 
     -- treesitter --
     use {

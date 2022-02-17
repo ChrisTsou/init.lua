@@ -19,6 +19,7 @@ local opts = {
     nowait = true, -- use `nowait` when creating keymaps
 }
 
+-- functions --
 local function autoFormatToggle()
     vim.g.personal_autoformat = not vim.g.personal_autoformat
     print('autoformat:', vim.g.personal_autoformat)
