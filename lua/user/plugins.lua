@@ -66,7 +66,6 @@ return packer.startup(function(use)
         }
     }
     use 'folke/which-key.nvim'                            -- display keybinds as you type them
-    use 'blackCauldron7/surround.nvim'                    -- Sandwich things
     use "numToStr/Comment.nvim"                           -- Easily comment stuff
 
     -- treesitter --

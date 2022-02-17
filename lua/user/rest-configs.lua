@@ -28,12 +28,6 @@ require('neoscroll').setup({ mappings = {} })
 -- hop --
 require('hop').setup({ keys = 'cieansthbyouvwdlgxjkpfmr'})
 
--- surround.nvim --
-require "surround".setup {
-    mappings_style = 'sandwich',
-    prefix = 'S'
-}
-
 require "lsp_signature".setup({
     bind = true, -- This is mandatory, otherwise border config won't get registered.
     handler_opts = {
