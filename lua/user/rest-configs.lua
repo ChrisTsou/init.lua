@@ -34,3 +34,6 @@ require "lsp_signature".setup({
         border = "rounded"
     }
 })
+
+-- neogen --
+require('neogen').setup({})
