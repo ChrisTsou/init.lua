@@ -79,7 +79,10 @@ return packer.startup(function(use)
 
     -- Git --
     use "lewis6991/gitsigns.nvim"
-    use 'kdheepak/lazygit.nvim'                           -- lazygit integration
+    use {
+        'kdheepak/lazygit.nvim',                          -- lazygit integration
+        branch = 'main'
+    }
 
     -- appearance --
     use 'christianchiarulli/nvcode-color-schemes.vim'
