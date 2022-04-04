@@ -18,6 +18,9 @@ vim.cmd([[
 -- Return to last edit position when opening files
 vim.cmd([[au BufReadPost * if line("'\"") > 0 && line("'\"") <= line("$") | exe "normal! g'\"" | endif]])
 
+-- Close nvim_tree when is the last window
+vim.cmd([[autocmd BufEnter * ++nested if winnr('$') == 1 && bufname() == 'NvimTree_' . tabpagenr() | quit | endif]])
+
 -- format on save (e.g: *.js between BufWritePost nad FormatWrite)
 -- au('FormatAutogroup', {[[
    -- BufWritePost *.js,*.jsx,*.ts,*.tsx,*.json,*.css,*.html,*.vue FormatWrite
