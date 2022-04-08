@@ -98,7 +98,7 @@ return packer.startup(function(use)
     }
     use 'xiyaowong/nvim-cursorword'                       -- highlight word under cursor
     use {
-        'akinsho/nvim-bufferline.lua',                    -- tabs
+        'akinsho/bufferline.nvim',                    -- tabs
         requires = 'kyazdani42/nvim-web-devicons'
     }
     use "moll/vim-bbye"                                   -- better bdelete
