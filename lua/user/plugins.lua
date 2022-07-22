@@ -61,8 +61,8 @@ return packer.startup(function(use)
     use {                                                 -- fuzzy find anything
         'nvim-telescope/telescope.nvim',
         requires = {
-            {'nvim-lua/popup.nvim'},
             {'nvim-lua/plenary.nvim'},
+            {'kyazdani42/nvim-web-devicons'},
         }
     }
     use 'folke/which-key.nvim'                            -- display keybinds as you type them
@@ -87,7 +87,6 @@ return packer.startup(function(use)
     -- appearance --
     use 'christianchiarulli/nvcode-color-schemes.vim'
     use 'norcalli/nvim-colorizer.lua'                     -- colorizer
-    use 'kyazdani42/nvim-web-devicons'                    -- devicons
     use 'karb94/neoscroll.nvim'                           -- smooth scrolling
     use {
         'hoob3rt/lualine.nvim',                           -- statusline

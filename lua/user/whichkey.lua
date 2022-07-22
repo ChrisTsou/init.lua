@@ -68,6 +68,7 @@ local mappings = {
         name = 'go',
         i = {':Telescope lsp_implementations<CR>', 'implementations'},
         d = {':Telescope lsp_definitions<CR>', 'definition'},
+        td = {':Telescope lsp_type_definitions<CR>', 'type definition'},
         l = {[[<Cmd>lua require('hop').hint_lines()<CR>]], 'line'}
     },
     ['<leader>c'] = {

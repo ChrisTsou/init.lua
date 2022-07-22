@@ -52,6 +52,7 @@ nvim_tree.setup {
         timeout = 500,
     },
     view = {
+        adaptive_size = true,
         width = 30,
         height = 30,
         hide_root_folder = false,
@@ -65,7 +66,6 @@ nvim_tree.setup {
                 { key = {"<CR>", "o", "<2-LeftMouse>"}, cb = tree_cb("edit") },
                 { key = "<C-v>",                        cb = tree_cb("vsplit") },
                 { key = "<C-x>",                        cb = tree_cb("split") },
-                { key = "<C-t>",                        cb = tree_cb("tabnew") },
                 { key = "P",                            cb = tree_cb("parent_node") },
                 { key = "<BS>",                         cb = tree_cb("close_node") },
                 { key = "<S-CR>",                       cb = tree_cb("close_node") },
