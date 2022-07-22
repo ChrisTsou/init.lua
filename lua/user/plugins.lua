@@ -95,7 +95,7 @@ return packer.startup(function(use)
             opt = true
         }
     }
-    use 'xiyaowong/nvim-cursorword'                       -- highlight word under cursor
+    use 'yamatsum/nvim-cursorline'
     use {
         'akinsho/bufferline.nvim',                    -- tabs
         requires = 'kyazdani42/nvim-web-devicons'

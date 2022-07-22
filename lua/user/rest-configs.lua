@@ -37,3 +37,9 @@ require "lsp_signature".setup({
 
 -- neogen --
 require('neogen').setup({})
+
+require('nvim-cursorline').setup({
+    cursorline = {
+        enable = false,
+    }
+})
