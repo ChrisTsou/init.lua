@@ -3,11 +3,14 @@ return {
             config ={
                 vetur = {
                     completion = {
-                        autoImport = true
+                        autoImport = true,
                     },
                     useWorkspaceDependencies = true,
                     experimental = {
                         templateInterpolationService = true,
+                    },
+                    validation = {
+                        templateProps = true
                     }
                 }
             }
