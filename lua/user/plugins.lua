@@ -45,6 +45,7 @@ return packer.startup(function(use)
     use 'neovim/nvim-lspconfig'                           -- lsp config
     use 'williamboman/nvim-lsp-installer'                 -- lsp installer
     use 'ray-x/lsp_signature.nvim'
+    use "b0o/schemastore.nvim"                            -- schemastore to use with jsonlsuse "b0o/schemastore.nvim"
 
     -- cmp/snips --
     use 'hrsh7th/nvim-cmp'                                -- nvim-cmp
