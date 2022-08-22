@@ -51,16 +51,16 @@ bufferline.setup {
     highlights = {
         -- same as lualine material
         separator_selected = {
-            guifg = '#263238',
+            fg = '#263238',
         },
         separator_visible = {
-            guifg = '#263238',
+            fg = '#263238',
         },
         separator = {
-            guifg = '#263238',
+            fg = '#263238',
         },
         fill = {
-            guibg = '#263238',
+            bg = '#263238',
         }
     }
 
