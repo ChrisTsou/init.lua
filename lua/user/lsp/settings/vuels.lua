@@ -9,9 +9,6 @@ return {
                     experimental = {
                         templateInterpolationService = true,
                     },
-                    validation = {
-                        templateProps = true
-                    }
                 }
             }
         }
