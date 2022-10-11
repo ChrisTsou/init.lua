@@ -48,7 +48,7 @@ end
 
 local function lsp_highlight_document(client)
     -- Set autocommands conditional on server_capabilities
-    if client.resolved_capabilities.document_highlight then
+    --[[ if client.server_capabilities.documentHighlight then ]]
         vim.api.nvim_exec(
             [[
             augroup lsp_document_highlight
@@ -59,12 +59,12 @@ local function lsp_highlight_document(client)
             ]],
             false
         )
-    end
+    --[[ end ]]
 end
 
 local function lsp_autocommands(client)
     -- lsp hover
-    if client.resolved_capabilities.hover then
+    if client.server_capabilities.hoverProvider then
         vim.cmd([[au CursorHold * lua vim.lsp.buf.hover()]])
     end
 end
@@ -95,8 +95,8 @@ end
 
 M.on_attach = function(client, bufnr)
     -- disable lsp formatting so only use null-ls and no prompt
-    client.resolved_capabilities.document_formatting = false
-    client.resolved_capabilities.document_range_formatting = false
+    client.server_capabilities.documentFormattingProvider = false
+    client.server_capabilities.documentRangeFormattingProvider = false
 
     lsp_autocommands(client)
     lsp_keymaps(bufnr)

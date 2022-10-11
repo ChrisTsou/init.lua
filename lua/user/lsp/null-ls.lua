@@ -11,7 +11,7 @@ local code_actions = null_ls.builtins.code_actions
 
 -- autocommands --
 local function on_attach(client)
-    if client.resolved_capabilities.document_formatting then
+    if client.server_capabilities.documentFormattingProvider then
         vim.cmd([[autocmd BufWritePre <buffer> lua _G.personal.autoformat()]])
     end
 end
