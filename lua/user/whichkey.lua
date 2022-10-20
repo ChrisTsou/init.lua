@@ -36,7 +36,7 @@ local mappings = {
         w = {':w<CR>', 'write buffer'},
         h = {[[<Cmd>lua require('hop').hint_words()<CR>]], 'hop'},
         tf = {autoFormatToggle, 'auto format toggle'},
-        f = {function() vim.lsp.buf.formatting() end, 'format'},
+        f = {function() vim.lsp.buf.format({ async = true }) end, 'format'},
         rn = {'<cmd>lua vim.lsp.buf.rename()<CR>', 'lsp rename'},
     },
     ['<leader>l'] = {

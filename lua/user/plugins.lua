@@ -42,10 +42,15 @@ return packer.startup(function(use)
     use 'wbthomason/packer.nvim'                          -- packer itself
 
     -- lsp --
-    use 'neovim/nvim-lspconfig'                           -- lsp config
-    use 'williamboman/nvim-lsp-installer'                 -- lsp installer
+    use({
+		"williamboman/mason.nvim",                        -- lsp,linter,formatter,debugger manager
+		"williamboman/mason-lspconfig.nvim",
+		"neovim/nvim-lspconfig",
+	})
+	use("jose-elias-alvarez/null-ls.nvim")                -- for formatters and linters
+
     use 'ray-x/lsp_signature.nvim'
-    use "b0o/schemastore.nvim"                            -- schemastore to use with jsonlsuse "b0o/schemastore.nvim"
+    use "b0o/schemastore.nvim"                            -- schemastore to use with jsonls use "b0o/schemastore.nvim"
 
     -- cmp/snips --
     use 'hrsh7th/nvim-cmp'                                -- nvim-cmp
