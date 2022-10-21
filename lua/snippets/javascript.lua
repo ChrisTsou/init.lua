@@ -13,20 +13,31 @@ local m = require("luasnip.extras").match
 local n = require("luasnip.extras").nonempty
 
 return {
-    s({trig = 'af', name='arrow function'}, {
-        t({'() => '}), i(0)
-    }),
-    s({trig = 'afb', name='arrow function block'}, {
-        t({'() => {',
-        '\t'}), i(0),
-        t({'', '}'}),
-    }),
-    s({trig = 'fn', name='named arrow function'}, {
-        t('const '), i(1), t(' = ('), i(2), t(') => {'),
-        t({'', '\t'}), i(0),
-        t({'', '}'})
-    }),
-    s({trig="im", name="import"}, {
-        t("import "), i(1), t(" from "), t("'"), i(2), t("'")
-    }),
+	s({ trig = "af", name = "arrow function" }, {
+		t({ "() => " }),
+		i(0),
+	}),
+	s({ trig = "afb", name = "arrow function block" }, {
+		t({ "() => {", "\t" }),
+		i(0),
+		t({ "", "}" }),
+	}),
+	s({ trig = "fn", name = "named arrow function" }, {
+		t("const "),
+		i(1),
+		t(" = ("),
+		i(2),
+		t(") => {"),
+		t({ "", "\t" }),
+		i(0),
+		t({ "", "}" }),
+	}),
+	s({ trig = "im", name = "import" }, {
+		t("import "),
+		i(1),
+		t(" from "),
+		t("'"),
+		i(2),
+		t("'"),
+	}),
 }

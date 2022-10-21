@@ -13,19 +13,21 @@ local m = require("luasnip.extras").match
 local n = require("luasnip.extras").nonempty
 
 return {
-    s({ trig = 'rc', namr = 'react component' },
-        {
-            t({"import React from 'react'",
-               "",
-               "const "}),
-            f(function(_, snip) return snip.env.TM_FILENAME_BASE or {} end, {}),
-            t({" = (props) => {",
-               "\treturn (",
-               "\t)",
-               "}",
-               "",
-               "export default "}),
-            f(function(_, snip) return snip.env.TM_FILENAME_BASE or {} end, {}),
-        }
-    )
+	s({ trig = "rc", namr = "react component" }, {
+		t({ "import React from 'react'", "", "const " }),
+		f(function(_, snip)
+			return snip.env.TM_FILENAME_BASE or {}
+		end, {}),
+		t({
+			" = (props) => {",
+			"\treturn (",
+			"\t)",
+			"}",
+			"",
+			"export default ",
+		}),
+		f(function(_, snip)
+			return snip.env.TM_FILENAME_BASE or {}
+		end, {}),
+	}),
 }
