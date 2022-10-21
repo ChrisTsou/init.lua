@@ -20,9 +20,6 @@ vim.g.loaded_ruby_provider = 0
 -- cursorHold --
 vim.g.cursorhold_updatetime = 500
 
--- personal functions/config --
-require "user.personal"
-
 --package manager --
 require "user.options"
 require "user.keymaps"

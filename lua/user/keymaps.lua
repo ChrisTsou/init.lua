@@ -38,8 +38,8 @@ map('i', '<C-n>', '<C- ><C-N><C-w>l', opts)
 map('n', '<esc>', ':let @/=""<CR>', opts)
 
 -- neoscroll --
-map('', '<C-t>', [[<Cmd>lua require('neoscroll').scroll(vim.wo.scroll, true, 250)<CR>]], opts)
-map('', '<C-s>', [[<Cmd>lua require('neoscroll').scroll(-vim.wo.scroll, true, 250)<CR>]], opts)
+vim.keymap.set('', '<C-t>', function () require('neoscroll').scroll(vim.wo.scroll, true, 250) end)
+vim.keymap.set('', '<C-s>', function () require('neoscroll').scroll(-vim.wo.scroll, true, 250) end)
 
 -- for terminal copy --
 -- map('n', 'Y', '', opts)
