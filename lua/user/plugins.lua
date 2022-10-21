@@ -61,7 +61,6 @@ return packer.startup(function(use)
     use 'L3MON4D3/LuaSnip'                                -- snippet
     use 'rafamadriz/friendly-snippets'                    -- actual snippets
 
-    use 'jose-elias-alvarez/null-ls.nvim'                 -- for formatters and linters
     use 'windwp/nvim-autopairs'                           -- autopair paren
     use 'windwp/nvim-ts-autotag'                          -- autotag html
     use 'phaazon/hop.nvim'                                -- hop (easymotion)
@@ -117,6 +116,7 @@ return packer.startup(function(use)
 
     -- Other --
     use 'antoinemadec/FixCursorHold.nvim'                 -- decouple cursorhold from updatetime
+    use 'AckslD/nvim-neoclip.lua'                         -- clipboard history
 
   -- Automatically set up your configuration after cloning packer.nvim
   -- Put this at the end after all plugins

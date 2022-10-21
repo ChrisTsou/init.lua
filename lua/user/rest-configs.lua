@@ -43,3 +43,6 @@ require("nvim-cursorline").setup({
 		enable = false,
 	},
 })
+
+-- neoclip --
+require('neoclip').setup()

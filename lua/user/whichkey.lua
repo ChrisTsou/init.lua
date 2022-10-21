@@ -96,9 +96,9 @@ local mappings = {
 		w = { ":q<CR>", "window" },
 	},
 	["<leader>p"] = {
-		name = "Packer",
 		s = { "<cmd>PackerSync<CR>", "Sync" },
 		t = { "<cmd>PackerStatus<CR>", "Status" },
+        h = { require('telescope').extensions.neoclip.default, "clipboard history" },
 	},
 	["<leader>e"] = { ":!npm run lint:fix<CR>", "lint fix" },
 }
