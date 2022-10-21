@@ -48,7 +48,7 @@ end
 
 local function lsp_highlight_document(client)
     -- Set autocommands conditional on server_capabilities
-    --[[ if client.server_capabilities.documentHighlight then ]]
+    if client.server_capabilities.documentHighlight then
         vim.api.nvim_exec(
             [[
             augroup lsp_document_highlight
@@ -59,7 +59,7 @@ local function lsp_highlight_document(client)
             ]],
             false
         )
-    --[[ end ]]
+    end
 end
 
 local function lsp_autocommands(client)
@@ -103,14 +103,12 @@ M.on_attach = function(client, bufnr)
     lsp_highlight_document(client)
 end
 
-local capabilities = vim.lsp.protocol.make_client_capabilities()
-
 -- nvim-cmp completion capabilities
 local status_ok, cmp_nvim_lsp = pcall(require, "cmp_nvim_lsp")
 if not status_ok then
     return
 end
 
-M.capabilities = cmp_nvim_lsp.update_capabilities(capabilities)
+M.capabilities = cmp_nvim_lsp.default_capabilities()
 
 return M
