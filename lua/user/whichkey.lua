@@ -22,6 +22,7 @@ local opts = {
 }
 
 local telescopeBuiltin = require("telescope.builtin")
+local telescope = require("telescope")
 
 -- normal mode --
 local mappings = {
@@ -39,7 +40,8 @@ local mappings = {
 		a = { vim.lsp.buf.code_action, "code actions" },
 		w = { ":w<CR>", "write buffer" },
 		h = { require("hop").hint_words, "hop" },
-		f = {
+		fb = { telescope.extensions.file_browser.file_browser, "file browser" },
+		fm = {
 			function()
 				vim.lsp.buf.format({ async = true })
 			end,
@@ -98,7 +100,7 @@ local mappings = {
 	["<leader>p"] = {
 		s = { "<cmd>PackerSync<CR>", "Sync" },
 		t = { "<cmd>PackerStatus<CR>", "Status" },
-        h = { require('telescope').extensions.neoclip.default, "clipboard history" },
+		h = { telescope.extensions.neoclip.default, "clipboard history" },
 	},
 	["<leader>e"] = { ":!npm run lint:fix<CR>", "lint fix" },
 }

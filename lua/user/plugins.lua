@@ -53,6 +53,17 @@ return packer.startup(function(use)
     use 'ray-x/lsp_signature.nvim'
     use "b0o/schemastore.nvim"                            -- schemastore to use with jsonls use "b0o/schemastore.nvim"
 
+    -- telescope --
+    use {                                                 -- fuzzy find anything
+        'nvim-telescope/telescope.nvim',
+        requires = {
+            {'nvim-lua/plenary.nvim'},
+            {'kyazdani42/nvim-web-devicons'},
+        }
+    }
+    -- telescope extensions
+    use { "nvim-telescope/telescope-file-browser.nvim" }
+
     -- cmp/snips --
     use 'hrsh7th/nvim-cmp'                                -- nvim-cmp
     use 'hrsh7th/cmp-nvim-lsp'
@@ -64,13 +75,7 @@ return packer.startup(function(use)
     use 'windwp/nvim-autopairs'                           -- autopair paren
     use 'windwp/nvim-ts-autotag'                          -- autotag html
     use 'phaazon/hop.nvim'                                -- hop (easymotion)
-    use {                                                 -- fuzzy find anything
-        'nvim-telescope/telescope.nvim',
-        requires = {
-            {'nvim-lua/plenary.nvim'},
-            {'kyazdani42/nvim-web-devicons'},
-        }
-    }
+
     use 'folke/which-key.nvim'                            -- display keybinds as you type them
     use 'numToStr/Comment.nvim'                           -- Easily comment stuff
     use 'danymat/neogen'                                  -- function comment annotation
