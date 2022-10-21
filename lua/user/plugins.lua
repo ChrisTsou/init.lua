@@ -74,12 +74,7 @@ return packer.startup(function(use)
     use 'rafamadriz/friendly-snippets'                    -- actual snippets
     use 'onsails/lspkind.nvim'                            -- completion menu icons
 
-    use 'windwp/nvim-autopairs'                           -- autopair paren
-    use 'windwp/nvim-ts-autotag'                          -- autotag html
-    use 'phaazon/hop.nvim'                                -- hop (easymotion)
-
     use 'folke/which-key.nvim'                            -- display keybinds as you type them
-    use 'numToStr/Comment.nvim'                           -- Easily comment stuff
     use 'danymat/neogen'                                  -- function comment annotation
     use 'tpope/vim-surround'                              -- surround/sandwich
 
@@ -88,7 +83,12 @@ return packer.startup(function(use)
         'nvim-treesitter/nvim-treesitter',
         run = ':TSUpdate'
     }
+
+    use 'numToStr/Comment.nvim'                           -- Easily comment stuff
     use 'JoosepAlviste/nvim-ts-context-commentstring'
+
+    use 'windwp/nvim-autopairs'                           -- autopair paren
+    use 'windwp/nvim-ts-autotag'                          -- autotag html
 
     -- Git --
     use "lewis6991/gitsigns.nvim"
@@ -124,6 +124,7 @@ return packer.startup(function(use)
     -- Other --
     use 'antoinemadec/FixCursorHold.nvim'                 -- decouple cursorhold from updatetime
     use 'AckslD/nvim-neoclip.lua'                         -- clipboard history
+    use 'phaazon/hop.nvim'                                -- hop (easymotion)
 
   -- Automatically set up your configuration after cloning packer.nvim
   -- Put this at the end after all plugins
