@@ -38,6 +38,7 @@ require("lsp_signature").setup({
 -- neogen --
 require('neogen').setup({ snippet_engine = "luasnip" })
 
+-- cursorline --
 require("nvim-cursorline").setup({
 	cursorline = {
 		enable = false,

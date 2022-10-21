@@ -35,7 +35,7 @@ local mappings = {
 		"diagnostic float",
 	},
 	["<leader>"] = {
-        an = { require("neogen").generate , "annotate"},
+		an = { require("neogen").generate, "annotate" },
 		w = { ":w<CR>", "write buffer" },
 		h = { require("hop").hint_words, "hop" },
 		fb = { telescope.extensions.file_browser.file_browser, "file browser" },

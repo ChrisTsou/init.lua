@@ -67,10 +67,12 @@ return packer.startup(function(use)
     -- cmp/snips --
     use 'hrsh7th/nvim-cmp'                                -- nvim-cmp
     use 'hrsh7th/cmp-nvim-lsp'
+    use 'hrsh7th/cmp-nvim-lua'
     use 'hrsh7th/cmp-buffer'
     use 'saadparwaiz1/cmp_luasnip'                        -- nvim-cmp luansip source
     use 'L3MON4D3/LuaSnip'                                -- snippet
     use 'rafamadriz/friendly-snippets'                    -- actual snippets
+    use 'onsails/lspkind.nvim'                            -- completion menu icons
 
     use 'windwp/nvim-autopairs'                           -- autopair paren
     use 'windwp/nvim-ts-autotag'                          -- autotag html
