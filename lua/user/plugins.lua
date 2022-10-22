@@ -76,7 +76,7 @@ return packer.startup(function(use)
 
     use 'folke/which-key.nvim'                            -- display keybinds as you type them
     use 'danymat/neogen'                                  -- function comment annotation
-    use 'tpope/vim-surround'                              -- surround/sandwich
+    use "kylechui/nvim-surround"                          -- edit sourrounding
 
     -- treesitter --
     use {

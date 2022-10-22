@@ -47,3 +47,6 @@ require("nvim-cursorline").setup({
 
 -- neoclip --
 require('neoclip').setup()
+
+-- nvim-surround --
+require("nvim-surround").setup()
