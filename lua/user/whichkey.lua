@@ -38,14 +38,17 @@ local mappings = {
 		an = { require("neogen").generate, "annotate" },
 		w = { ":w<CR>", "write buffer" },
 		h = { require("hop").hint_words, "hop" },
-		fb = { telescope.extensions.file_browser.file_browser, "file browser" },
-		fm = {
+		rn = { vim.lsp.buf.rename, "lsp rename" },
+	},
+	["<leader>f"] = {
+		b = { telescope.extensions.file_browser.file_browser, "file browser" },
+		m = {
 			function()
 				vim.lsp.buf.format({ async = true })
 			end,
 			"format",
 		},
-		rn = { vim.lsp.buf.rename, "lsp rename" },
+		l = { ":!npm run lint:fix<CR>", "lint fix" },
 	},
 	["<leader>l"] = {
 		name = "list",
@@ -100,7 +103,14 @@ local mappings = {
 		t = { "<cmd>PackerStatus<CR>", "Status" },
 		h = { telescope.extensions.neoclip.default, "clipboard history" },
 	},
-	["<leader>e"] = { ":!npm run lint:fix<CR>", "lint fix" },
+	["<leader>e"] = {
+		s = {
+			function()
+				require("luasnip.loaders").edit_snippet_files()
+			end,
+			"edit snippets",
+		},
+	},
 }
 which_key.register(mappings, opts)
 

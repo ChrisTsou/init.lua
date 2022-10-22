@@ -66,13 +66,13 @@ return packer.startup(function(use)
 
     -- cmp/snips --
     use 'hrsh7th/nvim-cmp'                                -- nvim-cmp
+    use 'saadparwaiz1/cmp_luasnip'                        -- nvim-cmp luansip source
     use 'hrsh7th/cmp-nvim-lsp'
     use 'hrsh7th/cmp-nvim-lua'
     use 'hrsh7th/cmp-buffer'
-    use 'saadparwaiz1/cmp_luasnip'                        -- nvim-cmp luansip source
+    use 'onsails/lspkind.nvim'                            -- completion menu icons
     use 'L3MON4D3/LuaSnip'                                -- snippet
     use 'rafamadriz/friendly-snippets'                    -- actual snippets
-    use 'onsails/lspkind.nvim'                            -- completion menu icons
 
     use 'folke/which-key.nvim'                            -- display keybinds as you type them
     use 'danymat/neogen'                                  -- function comment annotation

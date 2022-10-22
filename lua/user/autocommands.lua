@@ -21,11 +21,6 @@ vim.cmd([[au BufReadPost * if line("'\"") > 0 && line("'\"") <= line("$") | exe 
 -- Close nvim_tree when is the last window
 vim.cmd([[autocmd BufEnter * ++nested if winnr('$') == 1 && bufname() == 'NvimTree_' . tabpagenr() | quit | endif]])
 
--- format on save (e.g: *.js between BufWritePost nad FormatWrite)
--- au('FormatAutogroup', {[[
--- BufWritePost *.js,*.jsx,*.ts,*.tsx,*.json,*.css,*.html,*.vue FormatWrite
--- ]]})
-
 -- WSL yank support
 -- vim.g.wsl_clip_exe_location = '/mnt/c/Windows/System32/clip.exe'
 -- vim.cmd([[
