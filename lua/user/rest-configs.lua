@@ -16,7 +16,7 @@ require("nvim-web-devicons").setup({
 
 -- lualine --
 require("lualine").setup({
-	options = { theme = "material" },
+	options = { theme = "vscode" },
 })
 
 -- nvim-colorizer --

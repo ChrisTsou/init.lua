@@ -15,7 +15,6 @@ configs.setup({
 	highlight = {
 		enable = true, -- false will disable the whole extension
 		disable = { "css" }, -- list of language that will be disabled
-		additional_vim_regex_highlighting = true, -- needed for proper colorscheme colors \O? //TODO needed with vscode colorscheme?
 	},
 	indent = {
 		enable = true,

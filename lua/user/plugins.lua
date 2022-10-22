@@ -98,7 +98,7 @@ return packer.startup(function(use)
     }
 
     -- appearance --
-    use 'christianchiarulli/nvcode-color-schemes.vim'
+    use 'Mofiqul/vscode.nvim'                             -- colorscheme
     use 'NvChad/nvim-colorizer.lua'
     use 'karb94/neoscroll.nvim'                           -- smooth scrolling
     use {
