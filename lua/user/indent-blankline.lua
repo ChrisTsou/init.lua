@@ -6,7 +6,7 @@ end
 indent_blankline.setup({
 	use_treesitter = true,
 	char_list = { "│", "|", "┆", "┊" },
-	filetype_exclude = { "alpha", "help", "NvimTree" },
+	filetype_exclude = { "help", "NvimTree" },
 
 	space_char_blankline = " ",
 	show_current_context = true,

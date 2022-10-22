@@ -110,11 +110,11 @@ return packer.startup(function(use)
     }
     use 'yamatsum/nvim-cursorline'
     use {
-        'akinsho/bufferline.nvim',                    -- tabs
+        'akinsho/bufferline.nvim',                        -- tabs
         requires = 'kyazdani42/nvim-web-devicons'
     }
     use "moll/vim-bbye"                                   -- better bdelete
-    use "goolord/alpha-nvim"
+    use "goolord/alpha-nvim"                              -- dashboard
     use {
         'kyazdani42/nvim-tree.lua',                       -- file tree
         requires = 'kyazdani42/nvim-web-devicons'
