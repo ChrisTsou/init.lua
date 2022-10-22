@@ -1,22 +1,22 @@
 -- devicons --
 require("nvim-web-devicons").setup({
-	-- your personnal icons can go here (to override)
-	-- DevIcon will be appended to `name`
-	override = {
-		zsh = {
-			icon = "",
-			color = "#428850",
-			name = "Zsh",
-		},
-	},
-	-- globally enable default icons (default to false)
-	-- will get overriden by `get_icons` option
-	default = true,
+    -- your personnal icons can go here (to override)
+    -- DevIcon will be appended to `name`
+    override = {
+        zsh = {
+            icon = "",
+            color = "#428850",
+            name = "Zsh",
+        },
+    },
+    -- globally enable default icons (default to false)
+    -- will get overriden by `get_icons` option
+    default = true,
 })
 
 -- lualine --
 require("lualine").setup({
-	options = { theme = "vscode" },
+    options = { theme = "vscode" },
 })
 
 -- nvim-colorizer --
@@ -29,24 +29,24 @@ require("neoscroll").setup({ mappings = {} })
 require("hop").setup({ keys = "cieansthbyouvwdlgxjkpfmr" })
 
 require("lsp_signature").setup({
-	bind = true, -- This is mandatory, otherwise border config won't get registered.
-	handler_opts = {
-		border = "rounded",
-	},
+    bind = true, -- This is mandatory, otherwise border config won't get registered.
+    handler_opts = {
+        border = "rounded",
+    },
 })
 
 -- neogen --
-require('neogen').setup({ snippet_engine = "luasnip" })
+require("neogen").setup({ snippet_engine = "luasnip" })
 
 -- cursorline --
 require("nvim-cursorline").setup({
-	cursorline = {
-		enable = false,
-	},
+    cursorline = {
+        enable = false,
+    },
 })
 
 -- neoclip --
-require('neoclip').setup()
+require("neoclip").setup()
 
 -- nvim-surround --
 require("nvim-surround").setup()

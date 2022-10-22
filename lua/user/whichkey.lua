@@ -1,24 +1,24 @@
 local status_ok, which_key = pcall(require, "which-key")
 if not status_ok then
-	return
+    return
 end
 
 local setup = {
-	finder_action_keys = {
-		vsplit = "v",
-		scroll_down = "<C-t>",
-		scroll_up = "<C-s>",
-	},
+    finder_action_keys = {
+        vsplit = "v",
+        scroll_down = "<C-t>",
+        scroll_up = "<C-s>",
+    },
 }
 
 which_key.setup(setup)
 
 local opts = {
-	mode = "n", -- NORMAL mode
-	buffer = nil, -- Global mappings. Specify a buffer number for buffer local mappings
-	silent = true, -- use `silent` when creating keymaps
-	noremap = true, -- use `noremap` when creating keymaps
-	nowait = true, -- use `nowait` when creating keymaps
+    mode = "n", -- NORMAL mode
+    buffer = nil, -- Global mappings. Specify a buffer number for buffer local mappings
+    silent = true, -- use `silent` when creating keymaps
+    noremap = true, -- use `noremap` when creating keymaps
+    nowait = true, -- use `nowait` when creating keymaps
 }
 
 local telescopeBuiltin = require("telescope.builtin")
@@ -26,109 +26,109 @@ local telescope = require("telescope")
 
 -- normal mode --
 local mappings = {
-	["<Tab>"] = { ":NvimTreeToggle<CR>", "Explorer" },
-	["K"] = { "<Cmd>lua vim.lsp.buf.hover()<CR>", "lsp hover" },
-	["D"] = {
-		function()
-			vim.diagnostic.open_float()
-		end,
-		"diagnostic float",
-	},
-	["<leader>"] = {
-		an = { require("neogen").generate, "annotate" },
-		w = { ":w<CR>", "write buffer" },
-		h = { require("hop").hint_words, "hop" },
-		rn = { vim.lsp.buf.rename, "lsp rename" },
-	},
-	["<leader>f"] = {
-		b = { telescope.extensions.file_browser.file_browser, "file browser" },
-		m = {
-			function()
-				vim.lsp.buf.format({ async = true })
-			end,
-			"format",
-		},
-		l = { ":!npm run lint:fix<CR>", "lint fix" },
-	},
-	["<leader>l"] = {
-		name = "list",
-		l = { telescopeBuiltin.builtin, "lists" },
-		f = { telescopeBuiltin.find_files, "files" },
-		b = { ":Telescope file_browser<CR>", "file browser" }, -- TODO
-		s = { telescopeBuiltin.current_buffer_fuzzy_find, "search buffer" },
-		em = { telescopeBuiltin.symbols, "symbols" },
-		hf = {
-			function()
-				telescopeBuiltin.find_files({ hidden = true })
-			end,
-			"hidden files",
-		},
-		ht = { telescopeBuiltin.help_tags, "help" },
-		cs = { telescopeBuiltin.colorscheme, "colorschemes" },
-		g = {
-			name = "git",
-			c = { telescopeBuiltin.git_commits, "commits" },
-			bc = { telescopeBuiltin.git_bcommits, "buffer commits" },
-			br = { telescopeBuiltin.git_branches, "branches" },
-			ss = { telescopeBuiltin.git_status, "status" },
-			sh = { telescopeBuiltin.git_stash, "stash" },
-		},
-		z = { ":LazyGit<CR>", "lazygit" },
-		-- lsp --
-		r = { telescopeBuiltin.lsp_references, "lsp references" },
-		o = { telescopeBuiltin.lsp_document_symbols, "lsp symbols" },
-		d = {
-			function()
-				telescopeBuiltin.diagnostics({ bufnr = 0 })
-			end,
-			"lsp buffer diagnostics",
-		},
-		D = { telescopeBuiltin.diagnostics, "lsp all buffers diagnostics" },
-		v = { telescopeBuiltin.live_grep, "live grep" },
-	},
-	["<leader>g"] = {
-		name = "go",
-		i = { telescopeBuiltin.lsp_implementations, "implementations" },
-		d = { telescopeBuiltin.lsp_definitions, "definition" },
-		td = { telescopeBuiltin.lsp_type_definitions, "type definition" },
-		l = { require("hop").hint_lines, "line" },
-	},
-	["<leader>c"] = {
-		a = { vim.lsp.buf.code_action, "code actions" },
-		b = { ":Bdelete<CR>", "buffer" },
-		w = { ":q<CR>", "window" },
-	},
-	["<leader>p"] = {
-		s = { "<cmd>PackerSync<CR>", "Sync" },
-		t = { "<cmd>PackerStatus<CR>", "Status" },
-		h = { telescope.extensions.neoclip.default, "clipboard history" },
-	},
-	["<leader>e"] = {
-		s = {
-			function()
-				require("luasnip.loaders").edit_snippet_files()
-			end,
-			"edit snippets",
-		},
-	},
+    ["<Tab>"] = { ":NvimTreeToggle<CR>", "Explorer" },
+    ["K"] = { "<Cmd>lua vim.lsp.buf.hover()<CR>", "lsp hover" },
+    ["D"] = {
+        function()
+            vim.diagnostic.open_float()
+        end,
+        "diagnostic float",
+    },
+    ["<leader>"] = {
+        an = { require("neogen").generate, "annotate" },
+        w = { ":w<CR>", "write buffer" },
+        h = { require("hop").hint_words, "hop" },
+        rn = { vim.lsp.buf.rename, "lsp rename" },
+    },
+    ["<leader>f"] = {
+        b = { telescope.extensions.file_browser.file_browser, "file browser" },
+        m = {
+            function()
+                vim.lsp.buf.format({ async = true })
+            end,
+            "format",
+        },
+        l = { ":!npm run lint:fix<CR>", "lint fix" },
+    },
+    ["<leader>l"] = {
+        name = "list",
+        l = { telescopeBuiltin.builtin, "lists" },
+        f = { telescopeBuiltin.find_files, "files" },
+        b = { ":Telescope file_browser<CR>", "file browser" }, -- TODO
+        s = { telescopeBuiltin.current_buffer_fuzzy_find, "search buffer" },
+        em = { telescopeBuiltin.symbols, "symbols" },
+        hf = {
+            function()
+                telescopeBuiltin.find_files({ hidden = true })
+            end,
+            "hidden files",
+        },
+        ht = { telescopeBuiltin.help_tags, "help" },
+        cs = { telescopeBuiltin.colorscheme, "colorschemes" },
+        g = {
+            name = "git",
+            c = { telescopeBuiltin.git_commits, "commits" },
+            bc = { telescopeBuiltin.git_bcommits, "buffer commits" },
+            br = { telescopeBuiltin.git_branches, "branches" },
+            ss = { telescopeBuiltin.git_status, "status" },
+            sh = { telescopeBuiltin.git_stash, "stash" },
+        },
+        z = { ":LazyGit<CR>", "lazygit" },
+        -- lsp --
+        r = { telescopeBuiltin.lsp_references, "lsp references" },
+        o = { telescopeBuiltin.lsp_document_symbols, "lsp symbols" },
+        d = {
+            function()
+                telescopeBuiltin.diagnostics({ bufnr = 0 })
+            end,
+            "lsp buffer diagnostics",
+        },
+        D = { telescopeBuiltin.diagnostics, "lsp all buffers diagnostics" },
+        v = { telescopeBuiltin.live_grep, "live grep" },
+    },
+    ["<leader>g"] = {
+        name = "go",
+        i = { telescopeBuiltin.lsp_implementations, "implementations" },
+        d = { telescopeBuiltin.lsp_definitions, "definition" },
+        td = { telescopeBuiltin.lsp_type_definitions, "type definition" },
+        l = { require("hop").hint_lines, "line" },
+    },
+    ["<leader>c"] = {
+        a = { vim.lsp.buf.code_action, "code actions" },
+        b = { ":Bdelete<CR>", "buffer" },
+        w = { ":q<CR>", "window" },
+    },
+    ["<leader>p"] = {
+        s = { "<cmd>PackerSync<CR>", "Sync" },
+        t = { "<cmd>PackerStatus<CR>", "Status" },
+        h = { telescope.extensions.neoclip.default, "clipboard history" },
+    },
+    ["<leader>e"] = {
+        s = {
+            function()
+                require("luasnip.loaders").edit_snippet_files()
+            end,
+            "edit snippets",
+        },
+    },
 }
 which_key.register(mappings, opts)
 
 -- visual mode --
 local visualOpts = {
-	mode = "v",
-	buffer = nil, -- Global mappings. Specify a buffer number for buffer local mappings
-	silent = true, -- use `silent` when creating keymaps
-	noremap = true, -- use `noremap` when creating keymaps
-	nowait = true, -- use `nowait` when creating keymaps
+    mode = "v",
+    buffer = nil, -- Global mappings. Specify a buffer number for buffer local mappings
+    silent = true, -- use `silent` when creating keymaps
+    noremap = true, -- use `noremap` when creating keymaps
+    nowait = true, -- use `nowait` when creating keymaps
 }
 
 local visualMappings = {
-	["<leader>"] = {
-		ca = { vim.lsp.buf.code_action, "code actions" },
-		h = { [[<Cmd>lua require('hop').hint_words()<CR>]], "hop" },
-		gl = { [[<Cmd>lua require('hop').hint_lines()<CR>]], "line" },
-	},
+    ["<leader>"] = {
+        ca = { vim.lsp.buf.code_action, "code actions" },
+        h = { [[<Cmd>lua require('hop').hint_words()<CR>]], "hop" },
+        gl = { [[<Cmd>lua require('hop').hint_lines()<CR>]], "line" },
+    },
 }
 
 which_key.register(visualMappings, visualOpts)

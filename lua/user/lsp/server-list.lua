@@ -1,10 +1,10 @@
 return {
-	"sumneko_lua",
-	"cssls",
-	"html",
-	"tsserver",
-	"bashls",
-	"jsonls",
-	"yamlls",
-	"vuels",
+    "sumneko_lua",
+    "cssls",
+    "html",
+    "tsserver",
+    "bashls",
+    "jsonls",
+    "yamlls",
+    "vuels",
 }

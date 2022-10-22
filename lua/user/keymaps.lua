@@ -39,10 +39,10 @@ map("n", "<esc>", ':let @/=""<CR>', opts)
 
 -- neoscroll --
 vim.keymap.set("", "<C-t>", function()
-	require("neoscroll").scroll(vim.wo.scroll, true, 250)
+    require("neoscroll").scroll(vim.wo.scroll, true, 250)
 end)
 vim.keymap.set("", "<C-s>", function()
-	require("neoscroll").scroll(-vim.wo.scroll, true, 250)
+    require("neoscroll").scroll(-vim.wo.scroll, true, 250)
 end)
 
 -- for terminal copy --
