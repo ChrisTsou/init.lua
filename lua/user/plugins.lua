@@ -99,7 +99,7 @@ return packer.startup(function(use)
 
     -- appearance --
     use 'christianchiarulli/nvcode-color-schemes.vim'
-    use 'norcalli/nvim-colorizer.lua'                     -- colorizer
+    use 'NvChad/nvim-colorizer.lua'
     use 'karb94/neoscroll.nvim'                           -- smooth scrolling
     use {
         'hoob3rt/lualine.nvim',                           -- statusline
