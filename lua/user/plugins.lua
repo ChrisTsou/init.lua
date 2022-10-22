@@ -90,12 +90,22 @@ return packer.startup(function(use)
     use 'windwp/nvim-autopairs'                           -- autopair paren
     use 'windwp/nvim-ts-autotag'                          -- autotag html
 
-    -- Git --
+    -- git --
     use "lewis6991/gitsigns.nvim"
     use {
         'kdheepak/lazygit.nvim',                          -- lazygit integration
         branch = 'main'
     }
+
+    -- debug --
+    use 'mfussenegger/nvim-dap'
+    use { "rcarriga/nvim-dap-ui", requires = {"mfussenegger/nvim-dap"} }
+    use {
+        "microsoft/vscode-js-debug",
+        opt = true,
+        run = "npm install --legacy-peer-deps && npm run compile"
+    }
+    use { "mxsdev/nvim-dap-vscode-js", requires = {"mfussenegger/nvim-dap"} }
 
     -- appearance --
     use 'Mofiqul/vscode.nvim'                             -- colorscheme
