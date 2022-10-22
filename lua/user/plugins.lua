@@ -122,7 +122,6 @@ return packer.startup(function(use)
     use "lukas-reineke/indent-blankline.nvim"             -- indent lines
 
     -- Other --
-    use 'antoinemadec/FixCursorHold.nvim'                 -- decouple cursorhold from updatetime
     use 'AckslD/nvim-neoclip.lua'                         -- clipboard history
     use 'phaazon/hop.nvim'                                -- hop (easymotion)
 
