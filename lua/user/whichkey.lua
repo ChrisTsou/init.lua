@@ -5,8 +5,10 @@ end
 
 local setup = {
     finder_action_keys = {
-        vsplit = 'v', scroll_down = '<C-t>', scroll_up = '<C-s>'
-    }
+        vsplit = "v",
+        scroll_down = "<C-t>",
+        scroll_up = "<C-s>",
+    },
 }
 
 which_key.setup(setup)
@@ -19,69 +21,103 @@ local opts = {
     nowait = true, -- use `nowait` when creating keymaps
 }
 
--- functions --
-local function autoFormatToggle()
-    vim.g.personal_autoformat = not vim.g.personal_autoformat
-    print('autoformat:', vim.g.personal_autoformat)
-end
+local telescopeBuiltin = require("telescope.builtin")
+local telescope = require("telescope")
+local closeBuffers = require("close_buffers")
 
 -- normal mode --
 local mappings = {
-    ['<Tab>'] = { ':NvimTreeToggle<CR>', 'Explorer'},
-    [ 'K' ] = {'<Cmd>lua vim.lsp.buf.hover()<CR>', 'lsp hover'},
-    ['D'] = {function() vim.diagnostic.open_float() end, 'diagnostic float'},
-    ['<leader>'] = {
-        -- a = {[[<Cmd>lua require('telescope.builtin').lsp_code_actions(require('telescope.themes').get_cursor({}))<CR>]], 'code actions'},
-        a = {[[<Cmd>lua vim.lsp.buf.code_action()<CR>]], 'code actions'},
-        w = {':w<CR>', 'write buffer'},
-        h = {[[<Cmd>lua require('hop').hint_words()<CR>]], 'hop'},
-        tf = {autoFormatToggle, 'auto format toggle'},
-        f = {function() vim.lsp.buf.formatting() end, 'format'},
-        rn = {'<cmd>lua vim.lsp.buf.rename()<CR>', 'lsp rename'},
+    ["<Tab>"] = { ":NvimTreeToggle<CR>", "Explorer" },
+    ["K"] = { "<Cmd>lua vim.lsp.buf.hover()<CR>", "lsp hover" },
+    ["D"] = {
+        function()
+            vim.diagnostic.open_float()
+        end,
+        "diagnostic float",
     },
-    ['<leader>l'] = {
-        name = 'list',
-        l = {':Telescope builtin<CR>', 'lists'},
-        f = {':Telescope find_files<CR>', 'files'},
-        b = {':Telescope file_browser<CR>', 'file browser'},
-        s = {':Telescope current_buffer_fuzzy_find<CR>', 'search buffer'},
-        em = {':Telescope symbols<CR>', 'symbols'},
-        hf = {[[<Cmd>lua require('telescope.builtin').find_files({hidden = true})<CR>]], 'hidden files'},
-        hh = {':Telescope help_tags<CR>', 'help'},
-        cs = {':Telescope colorscheme<CR>', 'colorschemes'},
-        g = {
-            name = 'git',
-            c = {':Telescope git_commits<CR>', 'commits'},
-            bc = {':Telescope git_bcommits<CR>', 'buffer commits'},
-            br = {':Telescope git_branches<CR>', 'branches'},
-            ss = {':Telescope git_status<CR>', 'status'},
-            sh = {':Telescope git_stash<CR>', 'stash'},
+    ["<leader>"] = {
+        an = { require("neogen").generate, "annotate" },
+        w = { ":w<CR>", "write buffer" },
+        h = { require("hop").hint_words, "hop" },
+        rn = { vim.lsp.buf.rename, "lsp rename" },
+    },
+    ["<leader>f"] = {
+        b = { telescope.extensions.file_browser.file_browser, "file browser" },
+        m = {
+            function()
+                vim.lsp.buf.format({ async = true })
+            end,
+            "format",
         },
-        z = {':LazyGit<CR>', 'lazygit'},
+        l = { ":!npm run lint:fix<CR>", "lint fix" },
+    },
+    ["<leader>l"] = {
+        name = "list",
+        l = { telescopeBuiltin.builtin, "lists" },
+        f = { telescopeBuiltin.find_files, "files" },
+        b = { ":Telescope file_browser<CR>", "file browser" }, -- TODO
+        s = { telescopeBuiltin.current_buffer_fuzzy_find, "search buffer" },
+        em = { telescopeBuiltin.symbols, "symbols" },
+        hf = {
+            function()
+                telescopeBuiltin.find_files({ hidden = true })
+            end,
+            "hidden files",
+        },
+        ht = { telescopeBuiltin.help_tags, "help" },
+        cs = { telescopeBuiltin.colorscheme, "colorschemes" },
+        g = {
+            name = "git",
+            c = { telescopeBuiltin.git_commits, "commits" },
+            bc = { telescopeBuiltin.git_bcommits, "buffer commits" },
+            br = { telescopeBuiltin.git_branches, "branches" },
+            ss = { telescopeBuiltin.git_status, "status" },
+            sh = { telescopeBuiltin.git_stash, "stash" },
+        },
+        z = { ":LazyGit<CR>", "lazygit" },
         -- lsp --
-        r = {':Telescope lsp_references<CR>', 'lsp references'},
-        o = {':Telescope lsp_document_symbols<CR>', 'lsp symbols'},
-        d = {':Telescope diagnostics bufnr=0<CR>', 'lsp diagnostics'},
-        v = {':Telescope live_grep<CR>', 'live grep'}
+        r = { telescopeBuiltin.lsp_references, "lsp references" },
+        o = { telescopeBuiltin.lsp_document_symbols, "lsp symbols" },
+        d = {
+            function()
+                telescopeBuiltin.diagnostics({ bufnr = 0 })
+            end,
+            "lsp buffer diagnostics",
+        },
+        D = { telescopeBuiltin.diagnostics, "lsp all buffers diagnostics" },
+        v = { telescopeBuiltin.live_grep, "live grep" },
     },
-    ['<leader>g'] = {
-        name = 'go',
-        i = {':Telescope lsp_implementations<CR>', 'implementations'},
-        d = {':Telescope lsp_definitions<CR>', 'definition'},
-        td = {':Telescope lsp_type_definitions<CR>', 'type definition'},
-        l = {[[<Cmd>lua require('hop').hint_lines()<CR>]], 'line'}
+    ["<leader>g"] = {
+        name = "go",
+        i = { telescopeBuiltin.lsp_implementations, "implementations" },
+        d = { telescopeBuiltin.lsp_definitions, "definition" },
+        td = { telescopeBuiltin.lsp_type_definitions, "type definition" },
+        l = { require("hop").hint_lines, "line" },
     },
-    ['<leader>c'] = {
-        name = 'close',
-        b = {':Bdelete<CR>', 'buffer'},
-        w = {':q<CR>', 'window'},
+    ["<leader>c"] = {
+        a = { vim.lsp.buf.code_action, "code actions" },
+        b = { function() closeBuffers.delete({ type = 'this' }) end, "close buffer" },
+        B = { function() closeBuffers.delete({ type = 'this', force = true }) end , "force close buffer"},
+        o = { function() closeBuffers.wipe({ type = 'other' }) end , "close all other buffers"},
+        O = { function() closeBuffers.wipe({ type = 'other', force = true }) end , "force close all other buffers"},
+        e = { function() closeBuffers.wipe({ type = 'all' }) end , "close all buffers"},
+        E = { function() closeBuffers.wipe({ type = 'all', force = true }) end , "close all buffers"},
+        w = { ":q<CR>", "close window" },
+        V = { ":qa!<CR>", "force close neovim"}
     },
-    ['<leader>p'] = {
-        name = 'Packer',
-        s = {'<cmd>PackerSync<CR>', 'Sync'},
-        t = {'<cmd>PackerStatus<CR>', 'Status'}
+    ["<leader>p"] = {
+        s = { "<cmd>PackerSync<CR>", "Sync" },
+        t = { "<cmd>PackerStatus<CR>", "Status" },
+        h = { telescope.extensions.neoclip.default, "clipboard history" },
     },
-    ['<leader>e'] = {':!npm run lint:fix<CR>', 'lint fix'}
+    ["<leader>e"] = {
+        s = {
+            function()
+                require("luasnip.loaders").edit_snippet_files()
+            end,
+            "edit snippets",
+        },
+    },
 }
 which_key.register(mappings, opts)
 
@@ -95,11 +131,11 @@ local visualOpts = {
 }
 
 local visualMappings = {
-    ['<leader>'] = {
-        a = {[[<Cmd>lua require('telescope.builtin').lsp_range_code_actions(require('telescope.themes').get_cursor({}))<CR>]], 'code actions'},
-        h = {[[<Cmd>lua require('hop').hint_words()<CR>]], 'hop'},
-        gl = {[[<Cmd>lua require('hop').hint_lines()<CR>]], 'line'}
-    }
+    ["<leader>"] = {
+        ca = { vim.lsp.buf.code_action, "code actions" },
+        h = { [[<Cmd>lua require('hop').hint_words()<CR>]], "hop" },
+        gl = { [[<Cmd>lua require('hop').hint_lines()<CR>]], "line" },
+    },
 }
 
 which_key.register(visualMappings, visualOpts)

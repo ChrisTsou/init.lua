@@ -20,25 +20,22 @@ vim.g.loaded_ruby_provider = 0
 -- cursorHold --
 vim.g.cursorhold_updatetime = 500
 
--- personal functions/config --
-require "user.personal"
-
 --package manager --
-require "user.options"
-require "user.keymaps"
-require "user.plugins"
-require "user.colorscheme"
-require "user.cmp"
-require "user.lsp"
-require "user.telescope"
-require "user.treesitter"
-require "user.autopairs"
-require "user.comment"
-require "user.gitsigns"
-require "user.nvim-tree"
-require "user.bufferline"
-require "user.alpha"
-require "user.whichkey"
-require "user.indent-blankline"
-require "user.rest-configs"
-require "user.autocommands"
+require("user.options")
+require("user.keymaps")
+require("user.plugins")
+require("user.colorscheme")
+require("user.cmp")
+require("user.lsp")
+require("user.telescope")
+require("user.treesitter")
+require("user.autopairs")
+require("user.comment")
+require("user.gitsigns")
+require("user.nvim-tree")
+require("user.bufferline")
+require("user.alpha")
+require("user.whichkey")
+require("user.indent-blankline")
+require("user.rest-configs")
+require("user.autocommands")
