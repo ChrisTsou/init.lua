@@ -23,6 +23,7 @@ local opts = {
 
 local telescopeBuiltin = require("telescope.builtin")
 local telescope = require("telescope")
+local closeBuffers = require("close_buffers")
 
 -- normal mode --
 local mappings = {
@@ -95,8 +96,14 @@ local mappings = {
     },
     ["<leader>c"] = {
         a = { vim.lsp.buf.code_action, "code actions" },
-        b = { ":Bdelete<CR>", "buffer" },
-        w = { ":q<CR>", "window" },
+        b = { function() closeBuffers.delete({ type = 'this' }) end, "close buffer" },
+        B = { function() closeBuffers.delete({ type = 'this', force = true }) end , "force close buffer"},
+        o = { function() closeBuffers.wipe({ type = 'other' }) end , "close all other buffers"},
+        O = { function() closeBuffers.wipe({ type = 'other', force = true }) end , "force close all other buffers"},
+        e = { function() closeBuffers.wipe({ type = 'all' }) end , "close all buffers"},
+        E = { function() closeBuffers.wipe({ type = 'all', force = true }) end , "close all buffers"},
+        w = { ":q<CR>", "close window" },
+        V = { ":qa!<CR>", "force close neovim"}
     },
     ["<leader>p"] = {
         s = { "<cmd>PackerSync<CR>", "Sync" },

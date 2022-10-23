@@ -113,7 +113,6 @@ return packer.startup(function(use)
         'akinsho/bufferline.nvim',                        -- tabs
         requires = 'kyazdani42/nvim-web-devicons'
     }
-    use "moll/vim-bbye"                                   -- better bdelete
     use "goolord/alpha-nvim"                              -- dashboard
     use {
         'kyazdani42/nvim-tree.lua',                       -- file tree
@@ -124,6 +123,7 @@ return packer.startup(function(use)
     -- Other --
     use 'AckslD/nvim-neoclip.lua'                         -- clipboard history
     use 'phaazon/hop.nvim'                                -- hop (easymotion)
+    use 'kazhala/close-buffers.nvim'
 
   -- Automatically set up your configuration after cloning packer.nvim
   -- Put this at the end after all plugins
