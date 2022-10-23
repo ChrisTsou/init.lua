@@ -28,13 +28,6 @@ require("neoscroll").setup({ mappings = {} })
 -- hop --
 require("hop").setup({ keys = "cieansthbyouvwdlgxjkpfmr" })
 
-require("lsp_signature").setup({
-    bind = true, -- This is mandatory, otherwise border config won't get registered.
-    handler_opts = {
-        border = "rounded",
-    },
-})
-
 -- neogen --
 require("neogen").setup({ snippet_engine = "luasnip" })
 
@@ -50,3 +43,13 @@ require("neoclip").setup()
 
 -- nvim-surround --
 require("nvim-surround").setup()
+
+-- lsp_signature --
+require("lsp_signature").setup({
+    bind = true, -- This is mandatory, otherwise border config won't get registered.
+    handler_opts = {
+        border = "rounded",
+    },
+    padding = " ",
+    max_width = 120,
+})
