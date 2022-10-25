@@ -56,7 +56,7 @@ require("lsp_signature").setup({
 
 -- close-buffers --
 require("close_buffers").setup({
-    preserve_window_layout = {},
+    -- preserve_window_layout = {},
     next_buffer_cmd = function(windows)
         require("bufferline").cycle(1)
         local bufnr = vim.api.nvim_get_current_buf()
