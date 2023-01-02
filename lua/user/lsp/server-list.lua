@@ -7,4 +7,5 @@ return {
     "jsonls",
     "yamlls",
     "vuels",
+    "rust_analyzer",
 }

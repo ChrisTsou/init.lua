@@ -17,6 +17,7 @@ null_ls.setup({
 
         formatting.prettier,
         formatting.stylua,
+        formatting.rustfmt,
 
         hover.dictionary,
     },
