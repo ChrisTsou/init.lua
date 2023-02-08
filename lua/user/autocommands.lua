@@ -1,5 +1,5 @@
 -- stop annoying auto commenting on new lines
-vim.cmd([[au BufEnter * set fo-=c fo-=r fo-=o]])
+-- vim.cmd([[au BufEnter * set fo-=c fo-=r fo-=o]])
 
 -- open help in vertical split
 vim.cmd([[au FileType help wincmd L]])
