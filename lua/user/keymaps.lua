@@ -9,12 +9,18 @@ vim.g.mapleader = " "
 vim.g.maplocalleader = " "
 
 -- keyboard layout changes --
-map("", "t", "j", opts)
-map("", "s", "k", opts)
-map("", "n", "l", opts)
-map("", "j", "t", opts)
-map("", "k", "s", opts)
-map("", "l", "n", opts)
+map("n", "t", "j", opts)
+map("n", "s", "k", opts)
+map("n", "n", "l", opts)
+map("n", "j", "t", opts)
+map("n", "k", "s", opts)
+map("n", "l", "n", opts)
+map("v", "t", "j", opts)
+map("v", "s", "k", opts)
+map("v", "n", "l", opts)
+map("v", "j", "t", opts)
+map("v", "k", "s", opts)
+map("v", "l", "n", opts)
 
 -- Essentials --
 map("n", "<C-w>", ":bnext<CR>", opts)
