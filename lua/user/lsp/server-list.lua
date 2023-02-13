@@ -8,4 +8,5 @@ return {
     "yamlls",
     "vuels",
     "rust_analyzer",
+    "clangd",
 }
