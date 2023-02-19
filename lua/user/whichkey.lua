@@ -27,7 +27,6 @@ local closeBuffers = require("close_buffers")
 
 -- normal mode --
 local mappings = {
-    ["<Tab>"] = { ":NvimTreeToggle<CR>", "Explorer" },
     ["K"] = { "<Cmd>lua vim.lsp.buf.hover()<CR>", "lsp hover" },
     ["D"] = {
         function()
@@ -40,6 +39,7 @@ local mappings = {
         w = { ":w<CR>", "write buffer" },
         h = { require("hop").hint_words, "hop" },
         rn = { vim.lsp.buf.rename, "lsp rename" },
+        t = { function () require("nvim-tree.api").tree.toggle() end, "nvim tree" },
     },
     ["<leader>f"] = {
         b = { telescope.extensions.file_browser.file_browser, "file browser" },
@@ -113,7 +113,7 @@ local mappings = {
     ["<leader>e"] = {
         s = {
             function()
-                require("luasnip.loaders").edit_snippet_files()
+                require("luasnip.loaders").edit_snippet_files({})
             end,
             "edit snippets",
         },
@@ -139,3 +139,23 @@ local visualMappings = {
 }
 
 which_key.register(visualMappings, visualOpts)
+
+local insertOpts = {
+    mode = "i",
+    buffer = nil, -- Global mappings. Specify a buffer number for buffer local mappings
+    silent = true, -- use `silent` when creating keymaps
+    noremap = true, -- use `noremap` when creating keymaps
+    nowait = true, -- use `nowait` when creating keymaps
+}
+
+local insertMappings = {
+    ["<C-s>"] = { "<Plug>(copilot-suggest)", "copilot suggest"},
+    ["<C-n>"] = { "<Plug>(copilot-next)", "copilot next"},
+    ["<C-p>"] = { "<Plug>(copilot-next)", "copilot previous"},
+}
+which_key.register(
+    {["<C-a>"] = { "copilot#Accept('')", "copilot accept" }},
+    vim.tbl_extend("force", insertOpts, { expr = true })
+)
+
+which_key.register(insertMappings, insertOpts)

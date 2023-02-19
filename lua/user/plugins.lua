@@ -42,6 +42,9 @@ packer.init({
 return packer.startup(function(use)
     use 'wbthomason/packer.nvim'                          -- packer itself
 
+    -- copilot --
+    use "github/copilot.vim"
+
     -- lsp --
     use({
 		"williamboman/mason.nvim",                        -- lsp,linter,formatter,debugger manager

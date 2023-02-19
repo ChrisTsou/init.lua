@@ -30,7 +30,6 @@ nvim_tree.setup({
         mappings = {
             custom_only = true,
             list = {
-                { key = "<Tab>", mode = "n", cb = tree_cb("close") },
                 { key = "m", cb = tree_cb("cut") },
                 { key = "y", cb = tree_cb("copy") },
                 { key = "p", cb = tree_cb("paste") },
