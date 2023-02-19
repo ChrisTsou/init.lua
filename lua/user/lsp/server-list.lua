@@ -1,3 +1,4 @@
+-- lsp.settings filenames should be the same as here
 return {
     "lua_ls",
     "cssls",
