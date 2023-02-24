@@ -20,7 +20,7 @@ require("lualine").setup({
 })
 
 -- nvim-colorizer --
-require("colorizer").setup()
+require("colorizer").setup({})
 
 -- neoscroll --
 require("neoscroll").setup({ mappings = {} })

@@ -13,8 +13,6 @@ if not lspkind_status_ok then
     return
 end
 
-require("luasnip/loaders/from_vscode").lazy_load()
-
 local check_backspace = function()
     local col = vim.fn.col(".") - 1
     return col == 0 or vim.fn.getline("."):sub(col, col):match("%s")
@@ -70,24 +68,24 @@ cmp.setup({
         -- Set `select` to `false` to only confirm explicitly selected items.
         ["<CR>"] = cmp.mapping.confirm({ select = true }),
         -- tab defined here instead of whichkey because of fallback for tab
-        ["<Tab>"] = cmp.mapping(function(fallback)
-            if luasnip.expand_or_jumpable() then
-                luasnip.expand_or_jump()
-            elseif check_backspace() then
-                -- cmp.complete()
-                fallback()
-            else
-                fallback()
-            end
-        end, { "i", "s" }),
-
-        ["<S-Tab>"] = cmp.mapping(function(fallback)
-            if luasnip.jumpable(-1) then
-                luasnip.jump(-1)
-            else
-                fallback()
-            end
-        end, { "i", "s" }),
+        -- ["<Tab>"] = cmp.mapping(function(fallback)
+        --     if luasnip.expand_or_jumpable() then
+        --         luasnip.expand_or_jump()
+        --     elseif check_backspace() then
+        --         -- cmp.complete()
+        --         fallback()
+        --     else
+        --         fallback()
+        --     end
+        -- end, { "i", "s" }),
+        --
+        -- ["<S-Tab>"] = cmp.mapping(function(fallback)
+        --     if luasnip.jumpable(-1) then
+        --         luasnip.jump(-1)
+        --     else
+        --         fallback()
+        --     end
+        -- end, { "i", "s" }),
     }),
     formatting = {
         format = lspkind.cmp_format({

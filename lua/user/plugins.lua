@@ -66,6 +66,7 @@ return packer.startup(function(use)
     }
     -- telescope extensions
     use { "nvim-telescope/telescope-file-browser.nvim" }
+    use "benfowler/telescope-luasnip.nvim"
 
     -- cmp/snips --
     use 'hrsh7th/nvim-cmp'                                -- nvim-cmp
@@ -74,7 +75,7 @@ return packer.startup(function(use)
     use 'hrsh7th/cmp-nvim-lua'
     use 'hrsh7th/cmp-buffer'
     use 'onsails/lspkind.nvim'                            -- completion menu icons
-    use 'L3MON4D3/LuaSnip'                                -- snippet
+    use "L3MON4D3/LuaSnip"                                -- snippet
     use 'rafamadriz/friendly-snippets'                    -- actual snippets
 
     use 'folke/which-key.nvim'                            -- display keybinds as you type them
