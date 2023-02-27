@@ -74,6 +74,7 @@ return packer.startup(function(use)
     use 'hrsh7th/cmp-nvim-lsp'
     use 'hrsh7th/cmp-nvim-lua'
     use 'hrsh7th/cmp-buffer'
+    use 'hrsh7th/cmp-omni'
     use 'onsails/lspkind.nvim'                            -- completion menu icons
     use "L3MON4D3/LuaSnip"                                -- snippet
     use 'rafamadriz/friendly-snippets'                    -- actual snippets
@@ -120,6 +121,7 @@ return packer.startup(function(use)
     use "goolord/alpha-nvim"                              -- dashboard
     use {
         'kyazdani42/nvim-tree.lua',                       -- file tree
+        commit = "9c97e6449b0b0269bd44e1fd4857184dfa57bb4c", -- TODO remove when bug is fixed
         requires = 'kyazdani42/nvim-web-devicons'
     }
     use "lukas-reineke/indent-blankline.nvim"             -- indent lines
@@ -128,6 +130,7 @@ return packer.startup(function(use)
     use 'AckslD/nvim-neoclip.lua'                         -- clipboard history
     use 'phaazon/hop.nvim'                                -- hop (easymotion)
     use 'kazhala/close-buffers.nvim'
+    use 'lervag/vimtex'                                   -- latex
 
   -- Automatically set up your configuration after cloning packer.nvim
   -- Put this at the end after all plugins

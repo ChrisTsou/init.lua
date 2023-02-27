@@ -10,7 +10,7 @@ end
 
 configs.setup({
     ensure_installed = "all", -- put the language you want in this array
-    ignore_install = { "" }, -- List of parsers to ignore installing
+    ignore_install = { "latex" }, -- List of parsers to ignore installing
     sync_install = false, -- install languages synchronously (only applied to `ensure_installed`)
     highlight = {
         enable = true, -- false will disable the whole extension

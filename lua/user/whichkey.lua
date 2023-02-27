@@ -39,7 +39,7 @@ local mappings = {
         w = { ":w<CR>", "write buffer" },
         h = { require("hop").hint_words, "hop" },
         rn = { vim.lsp.buf.rename, "lsp rename" },
-        t = { function () require("nvim-tree.api").tree.toggle() end, "nvim tree" },
+        n = { function () require("nvim-tree.api").tree.toggle() end, "nvim tree" },
     },
     ["<leader>f"] = {
         b = { telescope.extensions.file_browser.file_browser, "file browser" },

@@ -20,6 +20,12 @@ vim.g.loaded_ruby_provider = 0
 -- cursorHold --
 vim.g.cursorhold_updatetime = 500
 
+-- copilot --
+vim.g.copilot_no_tab_map = true
+
+-- vimtex --
+require("user.vimtex").setup_options()
+
 --package manager --
 require("user.options")
 require("user.keymaps")

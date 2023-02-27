@@ -10,4 +10,5 @@ return {
     "vuels",
     "rust_analyzer",
     "clangd",
+    "texlab",
 }
