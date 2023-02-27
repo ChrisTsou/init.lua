@@ -54,6 +54,8 @@ require("lsp_signature").setup({
     max_width = 120,
 })
 
+require("lsp-file-operations").setup()
+
 -- close-buffers --
 require("close_buffers").setup({
     -- preserve_window_layout = {},

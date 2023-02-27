@@ -124,6 +124,13 @@ return packer.startup(function(use)
         commit = "9c97e6449b0b0269bd44e1fd4857184dfa57bb4c", -- TODO remove when bug is fixed
         requires = 'kyazdani42/nvim-web-devicons'
     }
+    use {
+        'antosha417/nvim-lsp-file-operations',            -- e.g. for renaming imports after file rename
+        requires = {
+            { "nvim-lua/plenary.nvim" },
+            { "kyazdani42/nvim-tree.lua" },
+        }
+    }
     use "lukas-reineke/indent-blankline.nvim"             -- indent lines
 
     -- Other --
@@ -132,10 +139,10 @@ return packer.startup(function(use)
     use 'kazhala/close-buffers.nvim'
     use 'lervag/vimtex'                                   -- latex
 
-  -- Automatically set up your configuration after cloning packer.nvim
-  -- Put this at the end after all plugins
-  if PACKER_BOOTSTRAP then
-    require("packer").sync()
-  end
+    -- Automatically set up your configuration after cloning packer.nvim
+    -- Put this at the end after all plugins
+    if PACKER_BOOTSTRAP then
+        require("packer").sync()
+    end
 end)
 -- stylua: ignore end
