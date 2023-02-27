@@ -43,7 +43,7 @@ nvim_tree.setup({
                 { key = "R", cb = tree_cb("refresh") },
                 { key = "n", mode = "n", cb = tree_cb("cd") },
                 { key = "h", mode = "n", cb = tree_cb("dir_up") },
-                { key = { "<CR>", "<2-LeftMouse>" }, cb = tree_cb("edit") },
+                { key = { "o", "<2-LeftMouse>" }, cb = tree_cb("edit") },
                 { key = "<C-v>", cb = tree_cb("vsplit") },
                 { key = "<C-x>", cb = tree_cb("split") },
                 { key = "P", cb = tree_cb("parent_node") },

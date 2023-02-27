@@ -25,8 +25,9 @@ map("x", "l", "n", opts)
 -- Essentials --
 map("n", "<C-w>", ":bnext<CR>", opts)
 map("n", "<C-d>", ":bprevious<CR>", opts)
-map("n", "<S-Enter>", "O", opts) --this also requires to configure terminal to send proper keycode
-map("n", "<Enter>", "o", opts)
+-- commented in favor of hop/leap
+-- map("n", "<S-Enter>", "O", opts) --this also requires to configure terminal to send proper keycode
+-- map("n", "<Enter>", "o", opts)
 map("n", "<C-f>", "<C-]>", opts)
 map("n", "<C-m>", "<C-o>", opts)
 

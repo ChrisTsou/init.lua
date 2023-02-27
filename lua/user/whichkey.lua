@@ -27,6 +27,7 @@ local closeBuffers = require("close_buffers")
 
 -- normal mode --
 local mappings = {
+    ["<CR>"] = { require("hop").hint_words, "hop" },
     ["K"] = { "<Cmd>lua vim.lsp.buf.hover()<CR>", "lsp hover" },
     ["D"] = {
         function()
@@ -37,7 +38,6 @@ local mappings = {
     ["<leader>"] = {
         an = { require("neogen").generate, "annotate" },
         w = { ":w<CR>", "write buffer" },
-        h = { require("hop").hint_words, "hop" },
         rn = { vim.lsp.buf.rename, "lsp rename" },
         n = { function () require("nvim-tree.api").tree.toggle() end, "nvim tree" },
     },
