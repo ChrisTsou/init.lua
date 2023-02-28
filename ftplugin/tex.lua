@@ -12,6 +12,9 @@ local sources = cmp.get_config().sources
 table.insert(sources, 1, { name = 'omni' })
 cmp.setup.buffer({ sources = sources })
 
+-- ported snippets --
+require("snippets.tex.castel-ported").setup()
+
 local opts = {
     mode = "n", -- NORMAL mode
     buffer = nil, -- Global mappings. Specify a buffer number for buffer local mappings
