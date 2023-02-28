@@ -26,7 +26,7 @@ require("colorizer").setup({})
 require("neoscroll").setup({ mappings = {} })
 
 -- hop --
-require("hop").setup({ keys = "cieansthbyouvwdlgxjkpfmr" })
+-- require("hop").setup({ keys = "cieansthbyouvwdlgxjkpfmr" })
 
 -- neogen --
 require("neogen").setup({ snippet_engine = "luasnip" })

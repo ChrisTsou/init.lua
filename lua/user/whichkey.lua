@@ -27,7 +27,10 @@ local closeBuffers = require("close_buffers")
 
 -- normal mode --
 local mappings = {
-    ["<CR>"] = { require("hop").hint_words, "hop" },
+    -- ["<CR>"] = { require("hop").hint_words, "hop" },
+    ["<CR>"] = { "<Plug>(leap-forward-to)", "leap forward" },
+    ["<S-CR>"] = { "<Plug>(leap-backward-to)", "leap back" },
+    ["<C-CR>"] = { "<Plug>(leap-form-window)", "leap back" },
     ["K"] = { "<Cmd>lua vim.lsp.buf.hover()<CR>", "lsp hover" },
     ["D"] = {
         function()
@@ -92,7 +95,7 @@ local mappings = {
         i = { telescopeBuiltin.lsp_implementations, "implementations" },
         d = { telescopeBuiltin.lsp_definitions, "definition" },
         td = { telescopeBuiltin.lsp_type_definitions, "type definition" },
-        l = { require("hop").hint_lines, "line" },
+        -- l = { require("hop").hint_lines, "line" },
     },
     ["<leader>c"] = {
         a = { vim.lsp.buf.code_action, "code actions" },
@@ -131,10 +134,13 @@ local visualOpts = {
 }
 
 local visualMappings = {
+    ["<CR>"] = { "<Plug>(leap-forward-to)", "leap forward" },
+    ["<S-CR>"] = { "<Plug>(leap-backward-to)", "leap back" },
+    ["<C-CR>"] = { "<Plug>(leap-form-window)", "leap back" },
     ["<leader>"] = {
         ca = { vim.lsp.buf.code_action, "code actions" },
-        h = { [[<Cmd>lua require('hop').hint_words()<CR>]], "hop" },
-        gl = { [[<Cmd>lua require('hop').hint_lines()<CR>]], "line" },
+        -- h = { [[<Cmd>lua require('hop').hint_words()<CR>]], "hop" },
+        -- gl = { [[<Cmd>lua require('hop').hint_lines()<CR>]], "line" },
     },
 }
 

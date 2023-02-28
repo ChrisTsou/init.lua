@@ -81,7 +81,12 @@ return packer.startup(function(use)
 
     use 'folke/which-key.nvim'                            -- display keybinds as you type them
     use 'danymat/neogen'                                  -- function comment annotation
-    use "kylechui/nvim-surround"                          -- edit sourrounding
+    use {
+        "kylechui/nvim-surround",                         -- edit sourrounding
+        requires = {
+            'tpope/vim-repeat'                            -- for . repeating
+        }
+    }
 
     -- treesitter --
     use {
@@ -135,7 +140,13 @@ return packer.startup(function(use)
 
     -- Other --
     use 'AckslD/nvim-neoclip.lua'                         -- clipboard history
-    use 'phaazon/hop.nvim'                                -- hop (easymotion)
+    -- use 'phaazon/hop.nvim'                                -- hop (easymotion)
+    use {
+        "ggandor/leap.nvim",                         -- edit sourrounding
+        requires = {
+            'tpope/vim-repeat'                            -- for . repeating
+        }
+    }
     use 'kazhala/close-buffers.nvim'
     use 'lervag/vimtex'                                   -- latex
 

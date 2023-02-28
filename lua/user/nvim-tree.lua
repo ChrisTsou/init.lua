@@ -48,7 +48,7 @@ nvim_tree.setup({
                 { key = "<C-x>", cb = tree_cb("split") },
                 { key = "P", cb = tree_cb("parent_node") },
                 { key = "<BS>", cb = tree_cb("close_node") },
-                { key = "<S-CR>", cb = tree_cb("close_node") },
+                -- { key = "<S-CR>", cb = tree_cb("close_node") },
                 { key = "S", cb = tree_cb("first_sibling") },
                 { key = "T", cb = tree_cb("last_sibling") },
                 { key = "<C-r>", cb = tree_cb("full_rename") },
