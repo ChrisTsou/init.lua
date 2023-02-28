@@ -24,20 +24,20 @@ local mappings = {
     ["<leader>"] = {
         t = {
             -- name = "+vimtex",
-            -- ds = {
-            --     name = "+delete surrounding",
-            --     e = { "<plug>(vimtex-env-delete)", "env" },
-            --     c = { "<plug>(vimtex-cmd-delete)", "cmd" },
-            --     ["$"] = { "<plug>(vimtex-env-delete-math)", "math" },
-            --     d = { "<plug>(vimtex-delim-delete)", "delim" },
-            -- },
-            -- cs = {
-            --     name = "+change surrounding",
-            --     e = { "<plug>(vimtex-env-change)", "env" },
-            --     c = { "<plug>(vimtex-cmd-change)", "cmd" },
-            --     ["$"] = { "<plug>(vimtex-env-change-math)", "math" },
-            --     d = { "<plug>(vimtex-delim-change-math)", "delim" },
-            -- },
+            ds = {
+                name = "+delete surrounding",
+                e = { "<plug>(vimtex-env-delete)", "env" },
+                c = { "<plug>(vimtex-cmd-delete)", "cmd" },
+                ["$"] = { "<plug>(vimtex-env-delete-math)", "math" },
+                d = { "<plug>(vimtex-delim-delete)", "delim" },
+            },
+            cs = {
+                name = "+change surrounding",
+                e = { "<plug>(vimtex-env-change)", "env" },
+                c = { "<plug>(vimtex-cmd-change)", "cmd" },
+                ["$"] = { "<plug>(vimtex-env-change-math)", "math" },
+                d = { "<plug>(vimtex-delim-change-math)", "delim" },
+            },
             t = {
                 name = "+toggle",
                 f = { "<plug>(vimtex-cmd-toggle-frac)", "frac" },
