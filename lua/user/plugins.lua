@@ -108,7 +108,10 @@ return packer.startup(function(use)
     }
 
     -- appearance --
-    use 'Mofiqul/vscode.nvim'                             -- colorscheme
+    use {
+        'Mofiqul/vscode.nvim',                             -- colorscheme
+        commit = 'db9ee339b5556aa832ca58871fd18f9467a18520' -- TODO remove
+    }
     use 'NvChad/nvim-colorizer.lua'
     use 'karb94/neoscroll.nvim'                           -- smooth scrolling
     use {
@@ -126,7 +129,6 @@ return packer.startup(function(use)
     use "goolord/alpha-nvim"                              -- dashboard
     use {
         'kyazdani42/nvim-tree.lua',                       -- file tree
-        commit = "9c97e6449b0b0269bd44e1fd4857184dfa57bb4c", -- TODO remove when bug is fixed
         requires = 'kyazdani42/nvim-web-devicons'
     }
     use {
