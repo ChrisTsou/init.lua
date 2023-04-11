@@ -19,7 +19,7 @@ vim.cmd([[
 vim.cmd([[au BufReadPost * if line("'\"") > 0 && line("'\"") <= line("$") | exe "normal! g'\"" | endif]])
 
 -- Close nvim_tree when is the last window
-vim.cmd([[autocmd BufEnter * ++nested if winnr('$') == 1 && bufname() == 'NvimTree_' . tabpagenr() | quit | endif]])
+-- vim.cmd([[autocmd BufEnter * ++nested if winnr('$') == 1 && bufname() == 'NvimTree_' . tabpagenr() | quit | endif]])
 
 -- WSL yank support
 -- vim.g.wsl_clip_exe_location = '/mnt/c/Windows/System32/clip.exe'
