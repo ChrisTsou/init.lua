@@ -3,8 +3,8 @@ require("bufferline").setup({
         close_command = function (bufnum)
             require('close_buffers').delete({ type = bufnum })
         end,
-        buffer_close_icon = "",
-        close_icon = "",
+        -- buffer_close_icon = "",
+        -- close_icon = "",
         left_trunc_marker = "",
         modified_icon = "●",
         right_trunc_marker = "",
