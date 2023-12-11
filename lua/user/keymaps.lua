@@ -52,6 +52,10 @@ vim.keymap.set("", "<C-s>", function()
     require("neoscroll").scroll(-vim.wo.scroll, true, 250)
 end)
 
+-- leap --
+vim.keymap.set({"n", "x", "o"}, "<CR>", "<Plug>(leap-forward-to)")
+vim.keymap.set({"n", "x", "o"}, "<S-CR>", "<Plug>(leap-backward-to)")
+
 -- for terminal copy --
 -- map('n', 'Y', '', opts)
 -- map('n', '<C-y>', '', opts)

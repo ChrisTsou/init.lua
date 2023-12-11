@@ -27,10 +27,6 @@ local closeBuffers = require("close_buffers")
 
 -- normal mode --
 local mappings = {
-    -- ["<CR>"] = { require("hop").hint_words, "hop" },
-    ["<CR>"] = { "<Plug>(leap-forward-to)", "leap forward" },
-    ["<S-CR>"] = { "<Plug>(leap-backward-to)", "leap back" },
-    ["<C-CR>"] = { "<Plug>(leap-form-window)", "leap back" },
     ["K"] = { "<Cmd>lua vim.lsp.buf.hover()<CR>", "lsp hover" },
     ["D"] = {
         function()
