@@ -23,6 +23,9 @@ vim.g.cursorhold_updatetime = 500
 -- copilot --
 vim.g.copilot_no_tab_map = true
 
+-- ts_context_commentstring
+vim.g.skip_ts_context_commentstring_module = true
+
 -- wsl clipboard --
 if vim.fn.has("wsl") == 1 then
     if vim.fn.executable("wl-copy") == 0 then
