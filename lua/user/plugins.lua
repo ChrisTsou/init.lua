@@ -51,7 +51,7 @@ return packer.startup(function(use)
 		"williamboman/mason-lspconfig.nvim",
 		"neovim/nvim-lspconfig",
 	})
-	use("jose-elias-alvarez/null-ls.nvim")                -- for formatters and linters
+	use("nvimtools/none-ls.nvim")                         -- for formatters and linters
 
     use 'ray-x/lsp_signature.nvim'
     use "b0o/schemastore.nvim"                            -- schemastore to use with jsonls use "b0o/schemastore.nvim"
