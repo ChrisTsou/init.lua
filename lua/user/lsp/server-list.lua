@@ -1,12 +1,13 @@
 -- lsp.settings filenames should be the same as here
 return {
-    "lua_ls",
-    "cssls",
-    "html",
+    "eslint",
     "tsserver",
-    "bashls",
+    "html",
+    "cssls",
     "jsonls",
     "yamlls",
+    "lua_ls",
+    "bashls",
     "vuels",
     "rust_analyzer",
     "clangd",

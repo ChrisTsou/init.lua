@@ -12,7 +12,6 @@ local hover = null_ls.builtins.hover
 null_ls.setup({
     debug = true,
     sources = {
-        diagnostics.eslint,
         diagnostics.stylelint,
 
         formatting.prettier,
