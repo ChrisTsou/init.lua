@@ -14,7 +14,7 @@ require("bufferline").setup({
         offsets = {
             {
                 filetype = "NvimTree",
-                text = "Explorer",
+                -- text = "Explorer",
                 text_align = "center",
                 highlight = "my_bufferline_offset",
             },
