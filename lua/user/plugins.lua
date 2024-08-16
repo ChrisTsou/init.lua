@@ -43,7 +43,7 @@ return packer.startup(function(use)
     use 'wbthomason/packer.nvim'                          -- packer itself
 
     -- copilot --
-    use "github/copilot.vim"
+    -- use "github/copilot.vim"
 
     -- lsp --
     use({
