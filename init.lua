@@ -34,42 +34,45 @@ if vim.fn.has("wsl") == 1 then
         vim.g.clipboard = {
             name = "wl-clipboard (wsl)",
             copy = {
-                ["+"] = 'wl-copy --foreground --type text/plain',
-                ["*"] = 'wl-copy --foreground --primary --type text/plain',
+                ["+"] = "wl-copy --foreground --type text/plain",
+                ["*"] = "wl-copy --foreground --primary --type text/plain",
             },
             paste = {
-                ["+"] = (function()
-                    return vim.fn.systemlist('wl-paste --no-newline|sed -e "s/\r$//"', {''}, 1) -- '1' keeps empty lines
-                end),
-                ["*"] = (function()
-                    return vim.fn.systemlist('wl-paste --primary --no-newline|sed -e "s/\r$//"', {''}, 1)
-                end),
+                ["+"] = function()
+                    return vim.fn.systemlist('wl-paste --no-newline|sed -e "s/\r$//"', { "" }, 1) -- '1' keeps empty lines
+                end,
+                ["*"] = function()
+                    return vim.fn.systemlist('wl-paste --primary --no-newline|sed -e "s/\r$//"', { "" }, 1)
+                end,
             },
-            cache_enabled = true
+            cache_enabled = true,
         }
     end
 end
 
+require("config.options")
+require("config.lazy")
+
 -- vimtex --
-require("user.vimtex").setup_options()
+-- require("user.vimtex").setup_options()
 
 --package manager --
-require("user.options")
-require("user.keymaps")
-require("user.plugins")
-require("user.colorscheme")
-require("user.luasnip")
-require("user.cmp")
-require("user.lsp")
-require("user.telescope")
-require("user.treesitter")
-require("user.autopairs")
-require("user.comment")
-require("user.gitsigns")
-require("user.nvim-tree")
-require("user.bufferline")
-require("user.alpha")
-require("user.indent-blankline")
-require("user.leap")
-require("user.rest-configs")
-require("user.autocommands")
+-- require("user.options")
+-- require("user.keymaps")
+-- require("user.plugins")
+-- require("user.colorscheme")
+-- require("user.luasnip")
+-- require("user.cmp")
+-- require("user.lsp")
+-- require("user.telescope")
+-- require("user.treesitter")
+-- require("user.autopairs")
+-- require("user.comment")
+-- require("user.gitsigns")
+-- require("user.nvim-tree")
+-- require("user.bufferline")
+-- require("user.alpha")
+-- require("user.indent-blankline")
+-- require("user.leap")
+-- require("user.rest-configs")
+-- require("user.autocommands")
