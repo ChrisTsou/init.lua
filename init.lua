@@ -52,6 +52,7 @@ end
 
 require("config.options")
 require("config.lazy")
+require("config.keymaps")
 
 -- vimtex --
 -- require("user.vimtex").setup_options()

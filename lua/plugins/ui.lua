@@ -1,3 +1,4 @@
+local map = vim.keymap.set
 local function nvimtree_on_attach(bufnr)
     local api = require("nvim-tree.api")
 
@@ -165,5 +166,21 @@ return {
         ---@module "ibl"
         ---@type ibl.config
         opts = {},
+    },
+    {
+        "karb94/neoscroll.nvim",
+        config = function()
+            local neoscroll = require("neoscroll")
+            neoscroll.setup({
+                mappings = {},
+            })
+
+            map("n", "T", function()
+                neoscroll.scroll(vim.wo.scroll, { move_cursor = true, duration = 250 })
+            end)
+            map("n", "S", function()
+                neoscroll.scroll(-vim.wo.scroll, { move_cursor = true, duration = 250 })
+            end)
+        end,
     },
 }
