@@ -1,7 +1,7 @@
 -- lsp.settings filenames should be the same as here
 return {
     "eslint",
-    "tsserver",
+    "ts_ls",
     "html",
     "cssls",
     "jsonls",
